@@ -1,0 +1,3580 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{b\_stat\_nb}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}667}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} P(exactly 8)}
+          \PY{c+c1}{\PYZsh{} P(x = 8)}
+          \PY{c+c1}{\PYZsh{} dbinom(a,size=n,prob=p)}
+          dbinom\PY{p}{(}\PY{l+m}{8}\PY{p}{,} size\PY{o}{=}\PY{l+m}{30}\PY{p}{,} prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(less than 17)}
+          \PY{c+c1}{\PYZsh{} P(x=0,1,2,...,16)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 16}
+          \PY{c+c1}{\PYZsh{} pbinom(a,size=n,prob=p)}
+          pbinom\PY{p}{(}\PY{l+m}{16}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(at most 12)}
+          \PY{c+c1}{\PYZsh{} P(x=0,1,2,...,12)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 12)}
+          \PY{c+c1}{\PYZsh{} pbinom(a,size=n,prob=p)}
+          pbinom\PY{p}{(}\PY{l+m}{12}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.15930918764035
+
+    
+    0.999784306173905
+
+    
+    0.978406359120145
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}668}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} P(more than 20)}
+          \PY{c+c1}{\PYZsh{} P(x = 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)}
+          \PY{c+c1}{\PYZsh{} 1 \PYZhy{} P(x=0,...,20)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 21)}
+          \PY{c+c1}{\PYZsh{} 1\PYZhy{}pbinom(a\PYZhy{}1,size=n,prob=p)}
+          \PY{l+m}{1}\PY{o}{\PYZhy{}}pbinom\PY{p}{(}\PY{l+m}{21}\PY{l+m}{\PYZhy{}1}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(at least 25)}
+          \PY{c+c1}{\PYZsh{} P(x=25,26,27,28,29,30)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 25)}
+          \PY{c+c1}{\PYZsh{} 1\PYZhy{}pbinom(a\PYZhy{}1,size=n,prob=p)}
+          \PY{l+m}{1}\PY{o}{\PYZhy{}}pbinom\PY{p}{(}\PY{l+m}{25}\PY{l+m}{\PYZhy{}1}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+\end{Verbatim}
+
+
+    2.81832537640803e-07
+
+    
+    3.20596882374957e-11
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}669}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} P(between 10 and 20 inclusive)}
+          \PY{c+c1}{\PYZsh{} P(x=10,11,..,20)}
+          \PY{c+c1}{\PYZsh{} P(10 \PYZlt{}= x \PYZlt{}= 20)}
+          \PY{c+c1}{\PYZsh{} pbinom(b,size=n,prob=p)\PYZhy{}pbinom(a\PYZhy{}1,size=n,prob=p)}
+          pbinom\PY{p}{(}\PY{l+m}{20}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}\PY{o}{\PYZhy{}}pbinom\PY{p}{(}\PY{l+m}{10}\PY{l+m}{\PYZhy{}1}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.25}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.196593081217951
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}670}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          E \PY{o}{=} \PY{l+m}{.05}
+          clevel \PY{o}{=} \PY{l+m}{.99}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} part a}
+          phat \PY{o}{=} \PY{l+m}{.23}
+          n \PY{o}{=} phat \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat\PY{p}{)} \PY{o}{*} \PY{p}{(}z\PY{o}{/}E\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}
+          n
+\end{Verbatim}
+
+
+    470.016075216343
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}671}]:} \PY{c+c1}{\PYZsh{} part b}
+          n \PY{o}{=} \PY{l+m}{0.25} \PY{o}{*} \PY{p}{(}z\PY{o}{/}E\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}
+          n
+          E \PY{o}{=} \PY{l+m}{.2}
+          sigma \PY{o}{=} \PY{l+m}{1.3}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          n \PY{o}{=} \PY{p}{(}z \PY{o}{*} sigma\PY{o}{/}E\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}
+          n
+\end{Verbatim}
+
+
+    663.489660102121
+
+    
+    162.301635174327
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}672}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x1 \PY{o}{=} \PY{l+m}{200}
+          n1 \PY{o}{=} \PY{l+m}{1000}
+          x2 \PY{o}{=} \PY{l+m}{100}
+          n2 \PY{o}{=} \PY{l+m}{780}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          phat1 \PY{o}{=} x1\PY{o}{/}n1
+          phat2 \PY{o}{=} x2\PY{o}{/}n2
+          lb \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{\PYZhy{}} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat1 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat1\PY{p}{)}\PY{o}{/}n1 \PY{o}{+} phat2 \PY{o}{*}
+                                            \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat2\PY{p}{)}\PY{o}{/}n2\PY{p}{)}
+          ub \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{+} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat1 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat1\PY{p}{)}\PY{o}{/}n1 \PY{o}{+} phat2
+                                          \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat2\PY{p}{)}\PY{o}{/}n2\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.0376614902726703
+
+    
+    0.105928253317073
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}673}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{25}
+          xbar \PY{o}{=} \PY{l+m}{20.2}
+          sigma \PY{o}{=} \PY{l+m}{2.1}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          lb \PY{o}{=} xbar \PY{o}{\PYZhy{}} z \PY{o}{*} sigma\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          ub \PY{o}{=} xbar \PY{o}{+} z \PY{o}{*} sigma\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    19.3768151264932
+
+    
+    21.0231848735068
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}674}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{25}
+          xbar \PY{o}{=} \PY{l+m}{20.2}
+          s \PY{o}{=} \PY{l+m}{2.1}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          t \PY{o}{=} qt\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          lb \PY{o}{=} xbar \PY{o}{\PYZhy{}} t \PY{o}{*} s\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          ub \PY{o}{=} xbar \PY{o}{+} t \PY{o}{*} s\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    19.3331626041162
+
+    
+    21.0668373958838
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}675}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{=} \PY{l+m}{50}
+          n \PY{o}{=} \PY{l+m}{200}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          phat \PY{o}{=} x\PY{o}{/}n
+          lb \PY{o}{=} phat \PY{o}{\PYZhy{}} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{o}{/}n\PY{p}{)}
+          ub \PY{o}{=} phat \PY{o}{+} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{o}{/}n\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.189988604045559
+
+    
+    0.310011395954441
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}676}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{18}
+          s \PY{o}{=} \PY{l+m}{2.5}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          XL \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          XR \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          lb \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}XR\PY{p}{)}
+          ub \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}XL\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    1.87596898789809
+
+    
+    3.74785997538552
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}677}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{25}
+          s \PY{o}{=} \PY{l+m}{10.1}
+          clevel \PY{o}{=} \PY{l+m}{.98}
+          atl \PY{o}{=} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          XL \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          XR \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          lb \PY{o}{=} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}XR
+          ub \PY{o}{=} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}XL
+          lb
+          ub
+\end{Verbatim}
+
+
+    56.9625464243958
+
+    
+    225.51201942914
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}678}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          var1 \PY{o}{=} \PY{l+m}{20}
+          n1 \PY{o}{=} \PY{l+m}{21}
+          var2 \PY{o}{=} \PY{l+m}{31}
+          n2 \PY{o}{=} \PY{l+m}{16}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          FL \PY{o}{=} qf\PY{p}{(}atl\PY{p}{,}n1\PY{p}{,}n2\PY{p}{)}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          FR \PY{o}{=} qf\PY{p}{(}atl\PY{p}{,}n1\PY{p}{,}n2\PY{p}{)}
+          lb \PY{o}{=} \PY{p}{(}var1\PY{o}{/}var2\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{/}FR\PY{p}{)}
+          ub \PY{o}{=} \PY{p}{(}var1\PY{o}{/}var2\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{/}FL\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.242080862029108
+
+    
+    1.61749612381827
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}679}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{4}\PY{p}{)}
+          prob \PY{o}{\PYZlt{}\PYZhy{}}
+            \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.30}\PY{p}{,}\PY{l+m}{0.25}\PY{p}{,}\PY{l+m}{0.15}\PY{p}{,}\PY{l+m}{0.10}\PY{p}{)}
+          expected\PYZus{}value \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}x \PY{o}{*}
+                                 prob\PY{p}{)}
+          expected\PYZus{}value
+\end{Verbatim}
+
+
+    1.65
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}680}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{4}\PY{p}{)}
+          prob \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.30}\PY{p}{,}\PY{l+m}{0.25}\PY{p}{,}\PY{l+m}{0.15}\PY{p}{,}\PY{l+m}{0.10}\PY{p}{)}
+          mu \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}x \PY{o}{*} prob\PY{p}{)}
+          variance \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}mu\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{*}prob\PY{p}{)}
+          sigma \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}variance\PY{p}{)}
+          sigma
+          variance
+\end{Verbatim}
+
+
+    1.23592070943083
+
+    
+    1.5275
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}681}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{13}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{35}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{50}\PY{p}{,}\PY{l+m}{59}\PY{p}{,}\PY{l+m}{61}\PY{p}{,}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{73}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{102}\PY{p}{)}
+          \PY{k+kp}{min}\PY{p}{(}x\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.50}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+          \PY{k+kp}{max}\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    4
+
+    
+    \textbf{25\textbackslash{}\%:} 24
+
+    
+    \textbf{50\textbackslash{}\%:} 45.5
+
+    
+    \textbf{75\textbackslash{}\%:} 64
+
+    
+    102
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}682}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{13}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{35}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{50}\PY{p}{,}\PY{l+m}{59}\PY{p}{,}\PY{l+m}{61}\PY{p}{,}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{73}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{102}\PY{p}{)}
+          boxplot\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}683}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{13}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{35}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{50}\PY{p}{,}\PY{l+m}{59}\PY{p}{,}\PY{l+m}{61}\PY{p}{,}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{73}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{102}\PY{p}{)}
+          boxplot\PY{p}{(}x\PY{p}{,}horizontal\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{,}outline\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}684}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          bmw\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2.556606964}\PY{p}{,} \PY{l+m}{2.67855273}\PY{p}{,} \PY{l+m}{2.896409052}\PY{p}{,} \PY{l+m}{2.783157674}\PY{p}{,} \PY{l+m}{2.891704203}\PY{p}{,}
+                 \PY{l+m}{2.860542363}\PY{p}{,} \PY{l+m}{3.010177438}\PY{p}{,} \PY{l+m}{3.006078566}\PY{p}{,} \PY{l+m}{3.065817881}\PY{p}{,} \PY{l+m}{3.04599754}\PY{p}{,}
+                 \PY{l+m}{2.946331923}\PY{p}{,} \PY{l+m}{2.959845995}\PY{p}{,} \PY{l+m}{3.026358467}\PY{p}{,} \PY{l+m}{3.04652044}\PY{p}{,} \PY{l+m}{2.950368732}\PY{p}{,}
+                 \PY{l+m}{3.029070333}\PY{p}{,} \PY{l+m}{3.110533089}\PY{p}{,} \PY{l+m}{3.085024381}\PY{p}{,} \PY{l+m}{3.119939077}\PY{p}{,} \PY{l+m}{2.978535249}\PY{p}{,}
+                 \PY{l+m}{2.75219467}\PY{p}{,}  \PY{l+m}{2.915389521}\PY{p}{,} \PY{l+m}{2.988153628}\PY{p}{,} \PY{l+m}{3.086303972}\PY{p}{,} \PY{l+m}{3.176594433}\PY{p}{,}
+                 \PY{l+m}{3.225732266}\PY{p}{,} \PY{l+m}{3.294465556}\PY{p}{,} \PY{l+m}{3.243529412}\PY{p}{,} \PY{l+m}{3.304870018}\PY{p}{,} \PY{l+m}{3.193147676}\PY{p}{,} \PY{l+m}{3.129738553}\PY{p}{,}
+                 \PY{l+m}{3.127374383}\PY{p}{,} \PY{l+m}{2.92905814}\PY{p}{,} \PY{l+m}{3.068145954}\PY{p}{,} \PY{l+m}{3.005435049}\PY{p}{,} \PY{l+m}{2.843629495}\PY{p}{,} \PY{l+m}{2.770085592}\PY{p}{,}
+                 \PY{l+m}{2.777451878}\PY{p}{,} \PY{l+m}{2.759566804}\PY{p}{,} \PY{l+m}{2.920092359}\PY{p}{,} \PY{l+m}{2.92111648}\PY{p}{,} \PY{l+m}{3.049652116}\PY{p}{,} \PY{l+m}{3.082093439}\PY{p}{,}
+                 \PY{l+m}{3.116267075}\PY{p}{,} \PY{l+m}{3.020815054}\PY{p}{,} \PY{l+m}{3.067773826}\PY{p}{,} \PY{l+m}{3.144712467}\PY{p}{,} \PY{l+m}{3.145272341}\PY{p}{,} \PY{l+m}{3.101892469}\PY{p}{,}
+                 \PY{l+m}{3.110666812}\PY{p}{,} \PY{l+m}{3.072415498}\PY{p}{,} \PY{l+m}{3.155850824}\PY{p}{,} \PY{l+m}{3.14246983}\PY{p}{,} \PY{l+m}{3.183704502}\PY{p}{,} \PY{l+m}{3.198713933}\PY{p}{,}
+                 \PY{l+m}{3.113070766}\PY{p}{,} \PY{l+m}{3.089495803}\PY{p}{,} \PY{l+m}{3.090996998}\PY{p}{,} \PY{l+m}{3.048798994}\PY{p}{,} \PY{l+m}{3.092541329}\PY{p}{,} \PY{l+m}{3.0610049}\PY{p}{,}
+                 \PY{l+m}{3.104945359}\PY{p}{,} \PY{l+m}{3.18507082}\PY{p}{,} \PY{l+m}{3.115690719}\PY{p}{,} \PY{l+m}{3.207693535}\PY{p}{,} \PY{l+m}{3.277106996}\PY{p}{,} \PY{l+m}{3.30402547}\PY{p}{,}
+                 \PY{l+m}{3.241771702}\PY{p}{,} \PY{l+m}{3.311746668}\PY{p}{,} \PY{l+m}{3.23569361}\PY{p}{,} \PY{l+m}{3.26617917}\PY{p}{,} \PY{l+m}{3.258903904}\PY{p}{,} \PY{l+m}{3.263772706}\PY{p}{,}
+                 \PY{l+m}{3.378303983}\PY{p}{,} \PY{l+m}{3.497567605}\PY{p}{,} \PY{l+m}{3.44470377}\PY{p}{,} \PY{l+m}{3.389057322}\PY{p}{,} \PY{l+m}{3.361797986}\PY{p}{,} \PY{l+m}{3.395749234}\PY{p}{,}
+                 \PY{l+m}{3.396519792}\PY{p}{,} \PY{l+m}{3.440065469}\PY{p}{,} \PY{l+m}{3.503362798}\PY{p}{,} \PY{l+m}{3.426215145}\PY{p}{,} \PY{l+m}{3.469665671}\PY{p}{,} \PY{l+m}{3.574197854}\PY{p}{,}
+                 \PY{l+m}{3.510470234}\PY{p}{,} \PY{l+m}{3.516369605}\PY{p}{,} \PY{l+m}{3.54208912}\PY{p}{,} \PY{l+m}{3.649670741}\PY{p}{,} \PY{l+m}{3.613670877}\PY{p}{,} \PY{l+m}{3.567191931}\PY{p}{,}
+                 \PY{l+m}{3.540669427}\PY{p}{,} \PY{l+m}{3.554004302}\PY{p}{,} \PY{l+m}{3.575878715}\PY{p}{,} \PY{l+m}{3.472742549}\PY{p}{,} \PY{l+m}{3.488230981}\PY{p}{,} \PY{l+m}{3.347761443}\PY{p}{,}
+                 \PY{l+m}{3.330774917}\PY{p}{,} \PY{l+m}{3.297317251}\PY{p}{,} \PY{l+m}{3.365535661}\PY{p}{,} \PY{l+m}{3.471003256}\PY{p}{,} \PY{l+m}{3.25091698}\PY{p}{,} \PY{l+m}{3.224380646}\PY{p}{,}
+                 \PY{l+m}{3.163785859}\PY{p}{,} \PY{l+m}{3.138099515}\PY{p}{,} \PY{l+m}{2.833036858}\PY{p}{,} \PY{l+m}{2.810907587}\PY{p}{,} \PY{l+m}{2.904712875}\PY{p}{,} \PY{l+m}{2.755251803}\PY{p}{,}
+                 \PY{l+m}{2.814689898}\PY{p}{,} \PY{l+m}{2.913002626}\PY{p}{,} \PY{l+m}{3.099236067}\PY{p}{,} \PY{l+m}{3.078325572}\PY{p}{,} \PY{l+m}{3.13366646}\PY{p}{,} \PY{l+m}{3.322839365}\PY{p}{,}
+                 \PY{l+m}{3.302444616}\PY{p}{,} \PY{l+m}{3.338754441}\PY{p}{,} \PY{l+m}{3.349166974}\PY{p}{,} \PY{l+m}{3.291345313}\PY{p}{,} \PY{l+m}{3.303216973}\PY{p}{,} \PY{l+m}{3.276465257}\PY{p}{,}
+                 \PY{l+m}{3.237776084}\PY{p}{,} \PY{l+m}{3.375400827}\PY{p}{,} \PY{l+m}{3.45817615}\PY{p}{,} \PY{l+m}{3.488017074}\PY{p}{,} \PY{l+m}{3.541857471}\PY{p}{,} \PY{l+m}{3.572457991}\PY{p}{,}
+                 \PY{l+m}{3.581015808}\PY{p}{,} \PY{l+m}{3.791774433}\PY{p}{,} \PY{l+m}{3.79312685}\PY{p}{,} \PY{l+m}{3.910581968}\PY{p}{,} \PY{l+m}{3.926340026}\PY{p}{,} \PY{l+m}{3.878135247}\PY{p}{,}
+                 \PY{l+m}{3.925156384}\PY{p}{,} \PY{l+m}{3.924643037}\PY{p}{,} \PY{l+m}{4.005057871}\PY{p}{,} \PY{l+m}{3.99085267}\PY{p}{,} \PY{l+m}{4.103485985}\PY{p}{,} \PY{l+m}{4.118061089}\PY{p}{,}
+                 \PY{l+m}{3.903708536}\PY{p}{,} \PY{l+m}{3.783462097}\PY{p}{,} \PY{l+m}{3.950685871}\PY{p}{,} \PY{l+m}{3.897132693}\PY{p}{,} \PY{l+m}{3.81874476}\PY{p}{,} \PY{l+m}{4.052497737}\PY{p}{,}
+                 \PY{l+m}{4.112446398}\PY{p}{,} \PY{l+m}{4.083216204}\PY{p}{,} \PY{l+m}{4.146161886}\PY{p}{,} \PY{l+m}{4.01983651}\PY{p}{,} \PY{l+m}{3.949145365}\PY{p}{,} \PY{l+m}{4.014417126}\PY{p}{,}
+                 \PY{l+m}{3.961879268}\PY{p}{,} \PY{l+m}{3.948779146}\PY{p}{,} \PY{l+m}{4.0255481}\PY{p}{,} \PY{l+m}{4.129615176}\PY{p}{,} \PY{l+m}{4.196810894}\PY{p}{,} \PY{l+m}{4.213400861}\PY{p}{,}
+                 \PY{l+m}{4.165765594}\PY{p}{,} \PY{l+m}{4.11662777}\PY{p}{,} \PY{l+m}{4.156520921}\PY{p}{,} \PY{l+m}{4.241873366}\PY{p}{,} \PY{l+m}{4.149384994}\PY{p}{,} \PY{l+m}{4.240520672}\PY{p}{,}
+                 \PY{l+m}{4.208773832}\PY{p}{,} \PY{l+m}{4.317394776}\PY{p}{,} \PY{l+m}{4.367344376}\PY{p}{,} \PY{l+m}{4.379586159}\PY{p}{,} \PY{l+m}{4.387250467}\PY{p}{,} \PY{l+m}{4.334240341}\PY{p}{,}
+                 \PY{l+m}{4.375203409}\PY{p}{,} \PY{l+m}{4.459658747}\PY{p}{,} \PY{l+m}{4.443815285}\PY{p}{,} \PY{l+m}{4.494730125}\PY{p}{,} \PY{l+m}{4.500465011}\PY{p}{,} \PY{l+m}{4.464412748}\PY{p}{,}
+                 \PY{l+m}{4.456101571}\PY{p}{,} \PY{l+m}{4.414856779}\PY{p}{,} \PY{l+m}{4.418370618}\PY{p}{,} \PY{l+m}{4.493210164}\PY{p}{,} \PY{l+m}{4.469212996}\PY{p}{,} \PY{l+m}{4.610565605}\PY{p}{,}
+                 \PY{l+m}{4.699352457}\PY{p}{,} \PY{l+m}{4.72942998}\PY{p}{,} \PY{l+m}{4.636349034}\PY{p}{,} \PY{l+m}{4.6121458}\PY{p}{,} \PY{l+m}{4.586802529}\PY{p}{,} \PY{l+m}{4.514150788}\PY{p}{,} \PY{l+m}{4.409398581}\PY{p}{,}
+                 \PY{l+m}{4.372228792}\PY{p}{,} \PY{l+m}{4.536462988}\PY{p}{,} \PY{l+m}{4.572233686}\PY{p}{)} \PY{c+c1}{\PYZsh{}logarithm of BMW stock price}
+          bmw2\PY{o}{\PYZlt{}\PYZhy{}}ts\PY{p}{(}bmw\PY{p}{)} \PY{c+c1}{\PYZsh{}indicate that bmw is a time series variable}
+          hw\PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}bmw2\PY{p}{,} gamma\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)} \PY{c+c1}{\PYZsh{}implement Holt Winters method}
+          hw \PY{c+c1}{\PYZsh{}obtain the estimated coefficients}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing with trend and without seasonal component.
+
+Call:
+HoltWinters(x = bmw2, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.9705391
+ beta : 0.09581481
+ gamma: FALSE
+
+Coefficients:
+         [,1]
+a 4.571180897
+b 0.008494273
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}685}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          tossingcoin \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{sample}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}\PY{p}{,} \PY{l+m}{1000}\PY{p}{,} replace \PY{o}{=} \PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{k+kp}{cumsum}\PY{p}{(}tossingcoin\PY{p}{)}
+          plot\PY{p}{(}\PY{k+kp}{cumsum}\PY{p}{(}tossingcoin\PY{p}{)}\PY{p}{,} type \PY{o}{=} \PY{l+s}{\PYZsq{}}\PY{l+s}{s\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item -1
+\item -2
+\item -1
+\item -2
+\item -1
+\item -2
+\item -3
+\item -4
+\item -3
+\item -2
+\item -1
+\item 0
+\item -1
+\item 0
+\item -1
+\item -2
+\item -1
+\item 0
+\item 1
+\item 0
+\item -1
+\item -2
+\item -1
+\item 0
+\item -1
+\item 0
+\item -1
+\item -2
+\item -1
+\item -2
+\item -3
+\item -2
+\item -3
+\item -2
+\item -1
+\item -2
+\item -1
+\item -2
+\item -3
+\item -4
+\item -5
+\item -6
+\item -7
+\item -6
+\item -7
+\item -8
+\item -7
+\item -8
+\item -7
+\item -6
+\item -7
+\item -6
+\item -5
+\item -6
+\item -5
+\item -6
+\item -7
+\item -6
+\item -7
+\item -6
+\item -7
+\item -6
+\item -5
+\item -6
+\item -5
+\item -4
+\item -3
+\item -4
+\item -3
+\item -4
+\item -5
+\item -4
+\item -3
+\item -2
+\item -1
+\item -2
+\item -3
+\item -4
+\item -3
+\item -2
+\item -1
+\item -2
+\item -3
+\item -2
+\item -3
+\item -4
+\item -3
+\item -4
+\item -5
+\item -4
+\item -3
+\item -4
+\item -5
+\item -6
+\item -7
+\item -6
+\item -5
+\item -6
+\item -7
+\item -8
+\item -7
+\item -6
+\item -5
+\item -4
+\item -3
+\item -4
+\item -5
+\item -4
+\item -5
+\item -4
+\item -3
+\item -2
+\item -3
+\item -4
+\item -5
+\item -4
+\item -3
+\item -4
+\item -3
+\item -2
+\item -1
+\item -2
+\item -3
+\item -4
+\item -5
+\item -6
+\item -5
+\item -4
+\item -5
+\item -6
+\item -5
+\item -4
+\item -5
+\item -4
+\item -5
+\item -4
+\item -5
+\item -4
+\item -5
+\item -4
+\item -3
+\item -2
+\item -1
+\item 0
+\item -1
+\item 0
+\item -1
+\item -2
+\item -3
+\item -2
+\item -3
+\item -4
+\item -5
+\item -6
+\item -5
+\item -6
+\item -7
+\item -8
+\item -9
+\item -8
+\item -9
+\item -10
+\item -11
+\item -10
+\item -9
+\item -8
+\item -9
+\item -10
+\item -11
+\item -10
+\item -11
+\item -10
+\item -11
+\item -12
+\item -13
+\item -12
+\item -13
+\item -12
+\item -13
+\item -12
+\item -13
+\item -12
+\item -11
+\item -12
+\item -13
+\item -12
+\item -13
+\item -12
+\item -13
+\item -14
+\item -13
+\item -12
+\item -13
+\item -12
+\item -13
+\item -14
+\item -15
+\item -16
+\item -17
+\item -18
+\item -19
+\item -20
+\item -21
+\item -22
+\item -21
+\item -22
+\item -21
+\item -20
+\item -21
+\item -20
+\item -21
+\item -20
+\item -19
+\item -20
+\item -19
+\item -20
+\item -21
+\item -22
+\item -23
+\item -22
+\item -21
+\item -22
+\item -23
+\item -24
+\item -23
+\item -24
+\item -23
+\item -22
+\item -21
+\item -22
+\item -21
+\item -22
+\item -23
+\item -22
+\item -23
+\item -24
+\item -23
+\item -22
+\item -21
+\item -22
+\item -23
+\item -22
+\item -21
+\item -20
+\item -19
+\item -18
+\item -19
+\item -20
+\item -21
+\item -22
+\item -21
+\item -22
+\item -23
+\item -24
+\item -23
+\item -24
+\item -25
+\item -26
+\item -27
+\item -28
+\item -29
+\item -28
+\item -27
+\item -26
+\item -27
+\item -28
+\item -29
+\item -30
+\item -31
+\item -30
+\item -31
+\item -30
+\item -29
+\item -30
+\item -31
+\item -32
+\item -31
+\item -32
+\item -31
+\item -32
+\item -33
+\item -32
+\item -33
+\item -34
+\item -33
+\item -34
+\item -35
+\item -36
+\item -37
+\item -38
+\item -37
+\item -38
+\item -39
+\item -38
+\item -39
+\item -38
+\item -37
+\item -38
+\item -37
+\item -38
+\item -37
+\item -38
+\item -37
+\item -36
+\item -35
+\item -34
+\item -33
+\item -34
+\item -35
+\item -34
+\item -33
+\item -32
+\item -31
+\item -30
+\item -31
+\item -32
+\item -33
+\item -34
+\item -35
+\item -34
+\item -33
+\item -34
+\item -35
+\item -36
+\item -37
+\item -36
+\item -37
+\item -36
+\item -37
+\item -36
+\item -37
+\item -36
+\item -37
+\item -36
+\item -35
+\item -36
+\item -35
+\item -34
+\item -35
+\item -34
+\item -35
+\item -34
+\item -35
+\item -36
+\item -35
+\item -36
+\item -35
+\item -34
+\item -33
+\item -32
+\item -33
+\item -32
+\item -31
+\item -32
+\item -31
+\item -30
+\item -31
+\item -30
+\item -31
+\item -32
+\item -33
+\item -34
+\item -33
+\item -32
+\item -31
+\item -30
+\item -29
+\item -30
+\item -29
+\item -30
+\item -29
+\item -28
+\item -27
+\item -28
+\item -29
+\item -30
+\item -29
+\item -28
+\item -27
+\item -26
+\item -27
+\item -26
+\item -25
+\item -24
+\item -25
+\item -26
+\item -27
+\item -28
+\item -27
+\item -28
+\item -27
+\item -28
+\item -27
+\item -26
+\item -25
+\item -24
+\item -25
+\item -26
+\item -27
+\item -28
+\item -27
+\item -28
+\item -27
+\item -28
+\item -29
+\item -28
+\item -27
+\item -28
+\item -29
+\item -30
+\item -31
+\item -30
+\item -31
+\item -30
+\item -31
+\item -30
+\item -31
+\item -30
+\item -29
+\item -30
+\item -31
+\item -32
+\item -33
+\item -34
+\item -33
+\item -34
+\item -35
+\item -36
+\item -37
+\item -38
+\item -37
+\item -36
+\item -37
+\item -38
+\item -39
+\item -40
+\item -41
+\item -42
+\item -41
+\item -42
+\item -43
+\item -44
+\item -45
+\item -46
+\item -45
+\item -44
+\item -43
+\item -42
+\item -43
+\item -44
+\item -43
+\item -44
+\item -43
+\item -42
+\item -41
+\item -42
+\item -41
+\item -40
+\item -41
+\item -42
+\item -43
+\item -42
+\item -43
+\item -44
+\item -45
+\item -44
+\item -43
+\item -44
+\item -45
+\item -46
+\item -45
+\item -44
+\item -45
+\item -44
+\item -43
+\item -42
+\item -43
+\item -44
+\item -45
+\item -46
+\item -45
+\item -46
+\item -45
+\item -46
+\item -47
+\item -48
+\item -47
+\item -48
+\item -47
+\item -46
+\item -45
+\item -44
+\item -45
+\item -46
+\item -47
+\item -48
+\item -47
+\item -46
+\item -45
+\item -46
+\item -47
+\item -48
+\item -47
+\item -48
+\item -49
+\item -48
+\item -47
+\item -46
+\item -47
+\item -48
+\item -47
+\item -46
+\item -47
+\item -48
+\item -47
+\item -46
+\item -45
+\item -46
+\item -45
+\item -44
+\item -45
+\item -46
+\item -45
+\item -44
+\item -45
+\item -46
+\item -45
+\item -46
+\item -47
+\item -46
+\item -47
+\item -46
+\item -47
+\item -48
+\item -49
+\item -48
+\item -47
+\item -48
+\item -49
+\item -50
+\item -49
+\item -48
+\item -47
+\item -48
+\item -47
+\item -48
+\item -49
+\item -48
+\item -49
+\item -48
+\item -49
+\item -48
+\item -49
+\item -50
+\item -49
+\item -50
+\item -51
+\item -52
+\item -51
+\item -50
+\item -51
+\item -50
+\item -51
+\item -52
+\item -51
+\item -52
+\item -51
+\item -52
+\item -53
+\item -54
+\item -55
+\item -56
+\item -57
+\item -58
+\item -57
+\item -58
+\item -57
+\item -58
+\item -57
+\item -56
+\item -57
+\item -56
+\item -55
+\item -54
+\item -53
+\item -54
+\item -55
+\item -56
+\item -55
+\item -56
+\item -57
+\item -56
+\item -57
+\item -58
+\item -59
+\item -60
+\item -61
+\item -60
+\item -61
+\item -60
+\item -59
+\item -60
+\item -61
+\item -62
+\item -63
+\item -62
+\item -63
+\item -64
+\item -63
+\item -62
+\item -61
+\item -62
+\item -63
+\item -64
+\item -63
+\item -62
+\item -63
+\item -64
+\item -65
+\item -66
+\item -65
+\item -66
+\item -67
+\item -68
+\item -67
+\item -66
+\item -67
+\item -66
+\item -65
+\item -66
+\item -67
+\item -66
+\item -67
+\item -68
+\item -69
+\item -70
+\item -71
+\item -72
+\item -73
+\item -74
+\item -73
+\item -72
+\item -73
+\item -72
+\item -73
+\item -74
+\item -73
+\item -72
+\item -73
+\item -74
+\item -73
+\item -74
+\item -73
+\item -74
+\item -73
+\item -72
+\item -71
+\item -72
+\item -73
+\item -74
+\item -73
+\item -72
+\item -73
+\item -72
+\item -71
+\item -72
+\item -71
+\item -70
+\item -69
+\item -68
+\item -69
+\item -68
+\item -69
+\item -68
+\item -67
+\item -68
+\item -67
+\item -66
+\item -67
+\item -68
+\item -67
+\item -66
+\item -67
+\item -66
+\item -67
+\item -68
+\item -69
+\item -68
+\item -67
+\item -66
+\item -67
+\item -68
+\item -69
+\item -70
+\item -69
+\item -70
+\item -71
+\item -72
+\item -71
+\item -70
+\item -71
+\item -70
+\item -69
+\item -70
+\item -71
+\item -72
+\item -71
+\item -70
+\item -71
+\item -72
+\item -73
+\item -74
+\item -75
+\item -76
+\item -75
+\item -76
+\item -75
+\item -74
+\item -75
+\item -74
+\item -75
+\item -74
+\item -75
+\item -76
+\item -77
+\item -76
+\item -75
+\item -76
+\item -75
+\item -74
+\item -73
+\item -74
+\item -73
+\item -72
+\item -71
+\item -72
+\item -73
+\item -72
+\item -73
+\item -72
+\item -71
+\item -70
+\item -69
+\item -70
+\item -69
+\item -70
+\item -71
+\item -72
+\item -71
+\item -70
+\item -69
+\item -68
+\item -69
+\item -70
+\item -71
+\item -72
+\item -71
+\item -72
+\item -71
+\item -72
+\item -73
+\item -72
+\item -73
+\item -74
+\item -73
+\item -74
+\item -75
+\item -74
+\item -75
+\item -74
+\item -73
+\item -72
+\item -71
+\item -72
+\item -73
+\item -72
+\item -71
+\item -70
+\item -69
+\item -68
+\item -67
+\item -66
+\item -67
+\item -68
+\item -67
+\item -68
+\item -67
+\item -68
+\item -67
+\item -66
+\item -67
+\item -68
+\item -69
+\item -70
+\item -69
+\item -70
+\item -71
+\item -70
+\item -71
+\item -72
+\item -71
+\item -70
+\item -69
+\item -68
+\item -69
+\item -70
+\item -71
+\item -70
+\item -71
+\item -70
+\item -69
+\item -68
+\item -67
+\item -68
+\item -69
+\item -68
+\item -69
+\item -70
+\item -71
+\item -72
+\item -71
+\item -72
+\item -73
+\item -74
+\item -73
+\item -74
+\item -75
+\item -74
+\item -73
+\item -74
+\item -75
+\item -76
+\item -77
+\item -78
+\item -77
+\item -76
+\item -75
+\item -74
+\item -73
+\item -74
+\item -73
+\item -72
+\item -73
+\item -72
+\item -71
+\item -72
+\item -71
+\item -70
+\item -69
+\item -70
+\item -69
+\item -68
+\item -67
+\item -66
+\item -65
+\item -64
+\item -65
+\item -64
+\item -65
+\item -64
+\item -65
+\item -64
+\item -65
+\item -64
+\item -65
+\item -64
+\item -63
+\item -62
+\item -61
+\item -62
+\item -63
+\item -64
+\item -63
+\item -62
+\item -63
+\item -64
+\item -63
+\item -62
+\item -61
+\item -62
+\item -63
+\item -64
+\item -63
+\item -64
+\item -63
+\item -64
+\item -65
+\item -66
+\item -65
+\item -64
+\item -65
+\item -66
+\item -65
+\item -66
+\item -67
+\item -68
+\item -67
+\item -68
+\item -69
+\item -70
+\item -71
+\item -70
+\item -71
+\item -70
+\item -71
+\item -72
+\item -73
+\item -72
+\item -71
+\item -72
+\item -73
+\item -72
+\item -71
+\item -72
+\item -71
+\item -72
+\item -71
+\item -70
+\item -69
+\item -68
+\item -69
+\item -68
+\item -67
+\item -66
+\item -67
+\item -68
+\item -67
+\item -68
+\item -67
+\item -68
+\item -67
+\item -66
+\item -65
+\item -64
+\item -63
+\item -64
+\item -63
+\item -64
+\item -63
+\item -62
+\item -63
+\item -62
+\item -63
+\item -62
+\item -61
+\item -62
+\item -63
+\item -64
+\item -65
+\item -66
+\item -67
+\item -68
+\item -67
+\item -66
+\item -65
+\item -66
+\item -67
+\item -66
+\item -67
+\item -68
+\item -69
+\item -68
+\item -69
+\item -70
+\item -69
+\item -68
+\item -67
+\item -66
+\item -65
+\item -66
+\item -65
+\item -64
+\item -65
+\item -64
+\item -65
+\item -64
+\item -63
+\item -62
+\item -63
+\item -64
+\item -65
+\item -66
+\item -65
+\item -64
+\item -65
+\item -66
+\item -67
+\item -68
+\item -67
+\item -66
+\item -67
+\item -66
+\item -65
+\item -64
+\item -63
+\item -62
+\item -61
+\item -60
+\item -59
+\item -60
+\end{enumerate*}
+
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}686}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pred \PY{o}{\PYZlt{}\PYZhy{}} predict\PY{p}{(}hw\PY{p}{,} n.ahead \PY{o}{=} \PY{l+m}{14}\PY{p}{,} prediction.interval \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}estimate the 14 predictions ahead}
+          pred \PY{c+c1}{\PYZsh{}obtain the predictions}
+          plot\PY{p}{(}hw\PY{p}{,} pred\PY{p}{)} \PY{c+c1}{\PYZsh{}obtain the graph}
+          \PY{c+c1}{\PYZsh{}the red line shows the predicted values while the black line}
+          \PY{c+c1}{\PYZsh{}indicates the stock price evolution}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Time Series:
+Start = 192 
+End = 205 
+Frequency = 1 
+           fit
+ [1,] 4.579675
+ [2,] 4.588169
+ [3,] 4.596664
+ [4,] 4.605158
+ [5,] 4.613652
+ [6,] 4.622147
+ [7,] 4.630641
+ [8,] 4.639135
+ [9,] 4.647629
+[10,] 4.656124
+[11,] 4.664618
+[12,] 4.673112
+[13,] 4.681606
+[14,] 4.690101
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}687}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          alpha \PY{o}{=} \PY{l+m}{8}
+          beta \PY{o}{=} \PY{l+m}{1}
+          gamma \PY{o}{=} \PY{k+kp}{factorial}\PY{p}{(}alpha \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)}
+          a \PY{o}{=} \PY{l+m}{3}
+          b \PY{o}{=} \PY{l+m}{4}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{p}{(}x\PY{o}{\PYZca{}}\PY{p}{(}alpha\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x\PY{o}{/}\PY{k+kp}{beta}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{p}{(}beta \PY{o}{\PYZca{}} alpha \PY{o}{*}
+                                                        \PY{k+kp}{gamma}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}a\PY{p}{,}b\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+0.03922911 with absolute error < 4.4e-16
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}688}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          observed \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{200}\PY{p}{,}\PY{l+m}{150}\PY{p}{,}\PY{l+m}{350}\PY{p}{,}\PY{l+m}{20}\PY{p}{)}
+          prob \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.25}\PY{p}{,}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.50}\PY{p}{,}\PY{l+m}{0.05}\PY{p}{)}
+          chisq.test\PY{p}{(}observed\PY{p}{,}p\PY{o}{=}prob\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 9.8611, df = 3, p-value = 0.01978
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}689}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{23}\PY{p}{,} \PY{l+m}{27}\PY{p}{,} \PY{l+m}{29}\PY{p}{,} \PY{l+m}{35}\PY{p}{,} \PY{l+m}{37}\PY{p}{,} \PY{l+m}{37}\PY{p}{,} \PY{l+m}{39}\PY{p}{,} \PY{l+m}{40}\PY{p}{,} \PY{l+m}{42}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{51}\PY{p}{)}
+          breaks \PY{o}{=} \PY{k+kp}{seq}\PY{p}{(}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}by\PY{o}{=}\PY{l+m}{10}\PY{p}{)}
+          xcut \PY{o}{=} \PY{k+kp}{cut}\PY{p}{(}x\PY{p}{,}breaks\PY{p}{,}right\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+          freq \PY{o}{=} \PY{k+kp}{table}\PY{p}{(}xcut\PY{p}{)}
+          freq
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+xcut
+[20,30) [30,40) [40,50) [50,60) 
+      3       4       3       1 
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}690}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{13}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{15}\PY{p}{,}\PY{l+m}{35}\PY{p}{,}\PY{l+m}{44}\PY{p}{)}
+          t\PYZus{}line \PY{o}{=} lm\PY{p}{(}y \PY{o}{\PYZti{}} x\PY{p}{)}
+          t\PYZus{}line
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{9}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{17}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          t\PYZus{}line \PY{o}{=} lm\PY{p}{(}y \PY{o}{\PYZti{}} x\PY{p}{)}
+          t\PYZus{}line
+          \PY{c+c1}{\PYZsh{}form yhat = mx + b}
+          \PY{c+c1}{\PYZsh{}form yhat = b1*x + b0}
+          coeffs \PY{o}{=} coefficients\PY{p}{(}t\PYZus{}line\PY{p}{)}
+          b0 \PY{o}{=} coeffs\PY{p}{[}\PY{l+m}{1}\PY{p}{]}
+          b1 \PY{o}{=} coeffs\PY{p}{[}\PY{l+m}{2}\PY{p}{]}
+          b1 \PY{o}{*} \PY{l+m}{21} \PY{o}{+} b0
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+      8.894        2.851  
+
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+      -2.35         5.85  
+
+    \end{verbatim}
+
+    
+    \textbf{x:} 120.5
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}691}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          xval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{5}\PY{p}{)}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}xval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{2}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{2}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{2}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 -1\\
+	  3\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}692}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          x1val \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{3}\PY{p}{)}
+          x2val \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{\PYZhy{}1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{9}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{9}\PY{p}{)}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}x1val\PY{p}{,}x2val\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{3}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{3}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 -1\\
+	  2\\
+	  4\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}693}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          xval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{4}\PY{p}{)}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}xval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{3}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{2}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{3}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          betahat \PY{o}{=} \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+          betahat
+          SSE \PY{o}{=} \PY{k+kp}{t}\PY{p}{(}Y\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y \PY{o}{\PYZhy{}} \PY{k+kp}{t}\PY{p}{(}betahat\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+          SSE
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 1.666667\\
+	 1.000000\\
+\end{tabular}
+
+
+    
+    \begin{tabular}{l}
+	 2.666667\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}694}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{9}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{17}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          t\PYZus{}line \PY{o}{=} lm\PY{p}{(}y \PY{o}{\PYZti{}} x\PY{p}{)}
+          coeffs \PY{o}{=} coefficients\PY{p}{(}t\PYZus{}line\PY{p}{)}
+          b0 \PY{o}{=} coeffs\PY{p}{[}\PY{l+m}{1}\PY{p}{]}
+          b1 \PY{o}{=} coeffs\PY{p}{[}\PY{l+m}{2}\PY{p}{]}
+          \PY{c+c1}{\PYZsh{} form: yhat = b1(x) + b0}
+          yhat \PY{o}{=} b1 \PY{o}{*} x \PY{o}{+} b0
+          \PY{c+c1}{\PYZsh{} (y \PYZhy{} yhat)\PYZca{}2 and then sum them}
+          \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}y\PY{o}{\PYZhy{}}yhat\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+    24.3
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}695}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{40}\PY{p}{,}\PY{l+m}{51}\PY{p}{,}\PY{l+m}{53}\PY{p}{,}\PY{l+m}{55}\PY{p}{,}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{67}\PY{p}{,}\PY{l+m}{69}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{72}\PY{p}{,}\PY{l+m}{75}\PY{p}{,}\PY{l+m}{76}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{83}\PY{p}{,}\PY{l+m}{99}\PY{p}{)}
+          hist\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}696}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          midpoints \PY{o}{=} \PY{p}{(}lcl \PY{o}{+} ucl\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          midpoints
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 14.5
+\item 24.5
+\item 34.5
+\item 44.5
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}697}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          new\PYZus{}midpoints \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{p}{)}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}lcl\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            new\PYZus{}midpoints\PY{p}{[}i\PY{p}{]} \PY{o}{=} \PY{p}{(}lcl\PY{p}{[}i\PY{p}{]} \PY{o}{+} ucl\PY{p}{[}i\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          \PY{p}{\PYZcb{}}
+          new\PYZus{}midpoints
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 14.5
+\item 24.5
+\item 34.5
+\item 44.5
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}698}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          f \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          x \PY{o}{=} \PY{p}{(}lcl\PY{o}{+}ucl\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          xbar \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}f \PY{o}{*} x\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}
+          xbar
+\end{Verbatim}
+
+
+    26.7
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}699}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          f \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}700}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} create the midpoints}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}lcl\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            x\PY{p}{[}i\PY{p}{]} \PY{o}{=} \PY{p}{(}lcl\PY{p}{[}i\PY{p}{]} \PY{o}{+} ucl\PY{p}{[}i\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          \PY{p}{\PYZcb{}}
+          sum\PYZus{}freq \PY{o}{=} \PY{l+m}{0}
+          sum\PYZus{}ftimesx \PY{o}{=} \PY{l+m}{0}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}lcl\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            sum\PYZus{}freq \PY{o}{=} sum\PYZus{}freq \PY{o}{+} f\PY{p}{[}i\PY{p}{]}
+            sum\PYZus{}ftimesx \PY{o}{=} sum\PYZus{}ftimesx \PY{o}{+} f\PY{p}{[}i\PY{p}{]} \PY{o}{*} x\PY{p}{[}i\PY{p}{]}
+          \PY{p}{\PYZcb{}}
+          xbar \PY{o}{=} sum\PYZus{}ftimesx\PY{o}{/}sum\PYZus{}freq
+          \PY{k+kp}{print}\PY{p}{(}xbar\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] 26.7
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}701}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          f \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{p}{(}lcl \PY{o}{+} ucl\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          mean \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}f \PY{o}{*} x\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}
+          \PY{k+kp}{mean}
+          top\PYZus{}sum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{*} f\PY{p}{)}
+          sample\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}top\PYZus{}sum\PY{o}{/}\PY{p}{(}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)}\PY{p}{)}
+          sample\PYZus{}stdev
+\end{Verbatim}
+
+
+    26.7
+
+    
+    6.78834535458098
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}702}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          f \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{p}{(}lcl \PY{o}{+} ucl\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          mean \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}f \PY{o}{*} x\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}
+          \PY{k+kp}{mean}
+          top\PYZus{}sum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{*} f\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}top\PYZus{}sum\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}stdev
+\end{Verbatim}
+
+
+    26.7
+
+    
+    6.72011904656458
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}703}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          lcl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{40}\PY{p}{)}
+          ucl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{49}\PY{p}{)}
+          f \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{p}{(}lcl \PY{o}{+} ucl\PY{p}{)}\PY{o}{/}\PY{l+m}{2}
+          mean \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}f \PY{o}{*} x\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}
+          \PY{k+kp}{mean}
+          top\PYZus{}sum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{*} f\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}top\PYZus{}sum\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}f\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}stdev
+          pop\PYZus{}variance \PY{o}{=} pop\PYZus{}stdev\PY{o}{\PYZca{}}\PY{l+m}{2}
+          pop\PYZus{}variance
+\end{Verbatim}
+
+
+    26.7
+
+    
+    6.72011904656458
+
+    
+    45.16
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}704}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          weights \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.10}\PY{p}{,}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.50}\PY{p}{,}\PY{l+m}{0.20}\PY{p}{)}
+          grades \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{100}\PY{p}{,}\PY{l+m}{80}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{30}\PY{p}{)}
+          course\PYZus{}average \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}weights \PY{o}{*} grades\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}weights\PY{p}{)}
+          course\PYZus{}average
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          weights \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{,}\PY{l+m}{20}\PY{p}{)}
+          grades \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{100}\PY{p}{,}\PY{l+m}{80}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{30}\PY{p}{)}
+          course\PYZus{}average \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}weights \PY{o}{*} grades\PY{p}{)}\PY{o}{/}\PY{k+kp}{sum}\PY{p}{(}weights\PY{p}{)}
+          course\PYZus{}average
+\end{Verbatim}
+
+
+    67
+
+    
+    67
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}705}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,} \PY{l+m}{5}\PY{p}{,} \PY{l+m}{7}\PY{p}{,} \PY{l+m}{11}\PY{p}{,} \PY{l+m}{12}\PY{p}{,} \PY{l+m}{21}\PY{p}{,} \PY{l+m}{25}\PY{p}{,} \PY{l+m}{31}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{72}\PY{p}{,} \PY{l+m}{81}\PY{p}{,} \PY{l+m}{102}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.50}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+\end{Verbatim}
+
+
+    \textbf{25\textbackslash{}\%:} 10
+
+    
+    \textbf{50\textbackslash{}\%:} 23
+
+    
+    \textbf{75\textbackslash{}\%:} 51.75
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}706}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{12}\PY{p}{)}
+          newx \PY{o}{=} \PY{k+kp}{sort}\PY{p}{(}x\PY{p}{)}
+          newx
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 2
+\item 12
+\item 25
+\item 31
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}707}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3.5}\PY{p}{,} \PY{l+m}{3.2}\PY{p}{,} \PY{l+m}{4.1}\PY{p}{,} \PY{l+m}{4.7}\PY{p}{,} \PY{l+m}{3.8}\PY{p}{,} \PY{l+m}{5.1}\PY{p}{,} \PY{l+m}{7.2}\PY{p}{,} \PY{l+m}{3.9}\PY{p}{,} \PY{l+m}{5.3}\PY{p}{,} \PY{l+m}{6.1}\PY{p}{,} \PY{l+m}{6.2}\PY{p}{,} \PY{l+m}{3.1}\PY{p}{,} \PY{l+m}{9.3}\PY{p}{,}
+                 \PY{l+m}{9.4}\PY{p}{,} \PY{l+m}{10.5}\PY{p}{,} \PY{l+m}{10.9}\PY{p}{,} \PY{l+m}{11.1}\PY{p}{,} \PY{l+m}{11.2}\PY{p}{,} \PY{l+m}{12.7}\PY{p}{,} \PY{l+m}{12.8}\PY{p}{,} \PY{l+m}{13.1}\PY{p}{,} \PY{l+m}{13.5}\PY{p}{,} \PY{l+m}{17}\PY{p}{,} \PY{l+m}{38.6}\PY{p}{)}
+          q1 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          q3 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+          iqr \PY{o}{=} q3 \PY{o}{\PYZhy{}} q1
+          lf \PY{o}{=} q1 \PY{o}{\PYZhy{}} \PY{l+m}{1.5} \PY{o}{*} iqr
+          uf \PY{o}{=} q3 \PY{o}{+} \PY{l+m}{1.5} \PY{o}{*} iqr
+          lf
+          uf
+\end{Verbatim}
+
+
+    \textbf{25\textbackslash{}\%:} -5.9875
+
+    
+    \textbf{75\textbackslash{}\%:} 22.1125
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}708}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{20}\PY{p}{,} \PY{l+m}{31}\PY{p}{,} \PY{l+m}{42}\PY{p}{,} \PY{l+m}{51}\PY{p}{,} \PY{l+m}{55}\PY{p}{,} \PY{l+m}{57}\PY{p}{,} \PY{l+m}{60}\PY{p}{,} \PY{l+m}{65}\PY{p}{,} \PY{l+m}{70}\PY{p}{,} \PY{l+m}{80}\PY{p}{)}
+          range \PY{o}{=} \PY{k+kp}{max}\PY{p}{(}x\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k+kp}{min}\PY{p}{(}x\PY{p}{)}
+          \PY{k+kp}{range}
+\end{Verbatim}
+
+
+    60
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}709}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          tsum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}stdev
+\end{Verbatim}
+
+
+    18.4932420089069
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}710}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} find the mean}
+          tsum \PY{o}{=} \PY{l+m}{0}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            tsum \PY{o}{=} tsum \PY{o}{+} x\PY{p}{[}i\PY{p}{]}
+          \PY{p}{\PYZcb{}}
+          mean \PY{o}{=} tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} calculate sum of (x\PYZhy{}mean)\PYZca{}2}
+          newsum \PY{o}{=} \PY{l+m}{0}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            newsum \PY{o}{=} newsum \PY{o}{+} \PY{p}{(}x\PY{p}{[}i\PY{p}{]} \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{p}{\PYZcb{}}
+          \PY{c+c1}{\PYZsh{} find population standard deviation}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}newsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}stdev
+\end{Verbatim}
+
+
+    18.4932420089069
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}711}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          sd\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    21.3541565040626
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}712}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          sample\PYZus{}variance \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}
+          sample\PYZus{}variance
+\end{Verbatim}
+
+
+    456
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}713}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{50}\PY{p}{)}
+          tsum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}variance \PY{o}{=} pop\PYZus{}stdev\PY{o}{\PYZca{}}\PY{l+m}{2}
+          pop\PYZus{}variance
+\end{Verbatim}
+
+
+    342
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}714}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,} \PY{l+m}{8}\PY{p}{,} \PY{l+m}{12}\PY{p}{,} \PY{l+m}{13}\PY{p}{,} \PY{l+m}{21}\PY{p}{,} \PY{l+m}{32}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{51}\PY{p}{,} \PY{l+m}{72}\PY{p}{,} \PY{l+m}{81}\PY{p}{)}
+          tsum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}mean \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          CV \PY{o}{=} pop\PYZus{}stdev\PY{o}{/}pop\PYZus{}mean \PY{o}{*} \PY{l+m}{100}
+          CV
+\end{Verbatim}
+
+
+    77.7204528415696
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}715}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,} \PY{l+m}{8}\PY{p}{,} \PY{l+m}{12}\PY{p}{,} \PY{l+m}{13}\PY{p}{,} \PY{l+m}{21}\PY{p}{,} \PY{l+m}{32}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{51}\PY{p}{,} \PY{l+m}{72}\PY{p}{,} \PY{l+m}{81}\PY{p}{)}
+          tsum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}mean \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          pop\PYZus{}median \PY{o}{=} median\PY{p}{(}x\PY{p}{)}
+          sk \PY{o}{=} \PY{p}{(}\PY{l+m}{3} \PY{o}{*} \PY{p}{(}pop\PYZus{}mean \PY{o}{\PYZhy{}} pop\PYZus{}median\PY{p}{)}\PY{p}{)}\PY{o}{/}pop\PYZus{}stdev
+          sk
+\end{Verbatim}
+
+
+    0.824685821379213
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}716}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,} \PY{l+m}{2}\PY{p}{,} \PY{l+m}{8}\PY{p}{,} \PY{l+m}{12}\PY{p}{,} \PY{l+m}{13}\PY{p}{,} \PY{l+m}{21}\PY{p}{,} \PY{l+m}{32}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{51}\PY{p}{,} \PY{l+m}{72}\PY{p}{,} \PY{l+m}{81}\PY{p}{)}
+          tsum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}stdev \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}tsum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}mean \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          pop\PYZus{}median \PY{o}{=} median\PY{p}{(}x\PY{p}{)}
+          sk \PY{o}{=} \PY{p}{(}\PY{l+m}{3} \PY{o}{*} \PY{p}{(}pop\PYZus{}mean \PY{o}{\PYZhy{}} pop\PYZus{}median\PY{p}{)}\PY{p}{)}\PY{o}{/}pop\PYZus{}stdev
+          sk
+          hist\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    1.0936221794622
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_49_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}717}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          startval \PY{o}{=} \PY{l+m}{10}
+          endval \PY{o}{=} \PY{l+m}{20}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{15}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{32}\PY{p}{,}\PY{l+m}{45}\PY{p}{,}\PY{l+m}{58}\PY{p}{)}
+          count \PY{o}{=} \PY{l+m}{0}
+          \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            \PY{k+kr}{if} \PY{p}{(}x\PY{p}{[}i\PY{p}{]} \PY{o}{\PYZgt{}=} startval \PY{o}{\PYZam{}\PYZam{}} x\PY{p}{[}i\PY{p}{]} \PY{o}{\PYZlt{}=} endval\PY{p}{)}
+              count \PY{o}{=} count \PY{o}{+} \PY{l+m}{1}
+          \PY{p}{\PYZcb{}}
+          actualp \PY{o}{=} count\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)} \PY{o}{*} \PY{l+m}{100}
+          actualp
+\end{Verbatim}
+
+
+    28.5714285714286
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}718}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{500}
+          p \PY{o}{=} \PY{l+m}{.20}
+          \PY{c+c1}{\PYZsh{} P(x is less than 90)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 89.5)}
+          \PY{c+c1}{\PYZsh{} case 1}
+          pnorm\PY{p}{(}\PY{l+m}{89.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(x is at most 92)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 92.5)}
+          \PY{c+c1}{\PYZsh{} case 1}
+          pnorm\PY{p}{(}\PY{l+m}{92.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(x is more than 105)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 105.5)}
+          pnorm\PY{p}{(}\PY{l+m}{105.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(x is at least 100)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 99.5)}
+          pnorm\PY{p}{(}\PY{l+m}{99.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(between 90 and 98, inclusive)}
+          \PY{c+c1}{\PYZsh{} P(89.5 \PYZlt{}= x \PYZlt{}= 98.5)}
+          pnorm\PY{p}{(}\PY{l+m}{98.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}
+            pnorm\PY{p}{(}\PY{l+m}{89.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.120210393184218
+
+    
+    0.200867818527699
+
+    
+    0.269304208340612
+
+    
+    0.522289941503218
+
+    
+    0.313197249379494
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}719}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} P(exactly 8)}
+          \PY{c+c1}{\PYZsh{} P(x = 8)}
+          \PY{c+c1}{\PYZsh{} dpois(a,lambda=lam)}
+          a \PY{o}{=} \PY{l+m}{3}
+          t \PY{o}{=} \PY{l+m}{5}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          dpois\PY{p}{(}\PY{l+m}{8}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(less than 17)}
+          \PY{c+c1}{\PYZsh{} P(x=0,1,2,...16)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 16)}
+          \PY{c+c1}{\PYZsh{} ppois(a,lambda=lam,lower=TRUE)}
+          ppois\PY{p}{(}\PY{l+m}{16}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(at most 12)}
+          \PY{c+c1}{\PYZsh{} P(x=0,1,2,...,12)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZlt{}= 12)}
+          \PY{c+c1}{\PYZsh{} ppois(a,lamba=lam,lower=TRUE)}
+          ppois\PY{p}{(}\PY{l+m}{12}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(more than 20)}
+          \PY{c+c1}{\PYZsh{} P(x=21,22,23,...)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 21)}
+          \PY{c+c1}{\PYZsh{} ppois(a,lambda=lam,lower=FALSE)}
+          ppois\PY{p}{(}\PY{l+m}{21}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} P(at least 25)}
+          \PY{c+c1}{\PYZsh{} P(x=25,26,27,...)}
+          \PY{c+c1}{\PYZsh{} P(x \PYZgt{}= 25)}
+          \PY{c+c1}{\PYZsh{} ppois(a,lambda=lam,lower=FALSE)}
+          ppois\PY{p}{(}\PY{l+m}{25}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0194443003318422
+
+    
+    0.664123200606545
+
+    
+    0.267611033392577
+
+    
+    0.0531064064592713
+
+    
+    0.00618490381126678
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}720}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{l+m}{1}\PY{o}{/}x\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+1.609438 with absolute error < 3.7e-09
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}721}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{l+m}{1}\PY{o}{/}x\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{k+kc}{Inf}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{l+m}{1}\PY{o}{/}x\PY{o}{\PYZca{}}\PY{l+m}{3}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{o}{\PYZhy{}}\PY{k+kc}{Inf}\PY{p}{,}\PY{k+kc}{Inf}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+1 with absolute error < 1.1e-14
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+0 with absolute error < 0
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}722}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          datavalues \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{42}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{14}\PY{p}{,}\PY{l+m}{50}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{16}\PY{p}{,}\PY{l+m}{6}\PY{p}{)}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{3}\PY{p}{,}byrow\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{k+kp}{colnames}\PY{p}{(}datavalues\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Approve\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{Disapprove\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{No\PYZus{}Opinion\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{rownames}\PY{p}{(}datavalues\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Republican\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{Democrat\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{Independent\PYZdq{}}\PY{p}{)}
+          tbl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.table}\PY{p}{(}datavalues\PY{p}{)}
+          chisq.test\PY{p}{(}tbl\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Pearson's Chi-squared test
+
+data:  tbl
+X-squared = 8.0305, df = 4, p-value = 0.09047
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}723}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          datavalues \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{35}\PY{p}{,}\PY{l+m}{75}\PY{p}{,}\PY{l+m}{45}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{45}\PY{p}{,}\PY{l+m}{45}\PY{p}{,}\PY{l+m}{15}\PY{p}{)}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{4}\PY{p}{,}byrow\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{k+kp}{colnames}\PY{p}{(}datavalues\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{0\PYZhy{}30\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{30\PYZhy{}60\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{60\PYZhy{}90\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{90\PYZhy{}over\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{rownames}\PY{p}{(}datavalues\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{male\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{female\PYZdq{}}\PY{p}{)}
+          tbl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.table}\PY{p}{(}datavalues\PY{p}{)}
+          chisq.test\PY{p}{(}tbl\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Pearson's Chi-squared test
+
+data:  tbl
+X-squared = 18.146, df = 3, p-value = 0.0004103
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}724}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{9}\PY{p}{,}\PY{l+m}{13}\PY{p}{,}\PY{l+m}{8}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{6}\PY{p}{,}\PY{l+m}{3}\PY{p}{)}
+          plot\PY{p}{(}x\PY{p}{,}y\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_57_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}725}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{6}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1.3}\PY{p}{,}\PY{l+m}{1.6}\PY{p}{,}\PY{l+m}{2.1}\PY{p}{,}\PY{l+m}{2.2}\PY{p}{,}\PY{l+m}{2.7}\PY{p}{)}
+          cor\PY{p}{(}x\PY{p}{,}y\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,}\PY{l+m}{11}\PY{p}{,}\PY{l+m}{16}\PY{p}{,}\PY{l+m}{9}\PY{p}{,}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{15}\PY{p}{,}\PY{l+m}{16}\PY{p}{,}\PY{l+m}{10}\PY{p}{)}
+          y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{96}\PY{p}{,}\PY{l+m}{51}\PY{p}{,}\PY{l+m}{62}\PY{p}{,}\PY{l+m}{58}\PY{p}{,}\PY{l+m}{89}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{46}\PY{p}{,}\PY{l+m}{51}\PY{p}{)}
+          cor\PY{p}{(}x\PY{p}{,}y\PY{p}{)}
+\end{Verbatim}
+
+
+    0.982703641586785
+
+    
+    -0.335057535329579
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}726}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{9.1}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{10}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1.5}\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{20}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}
+            pnorm\PY{p}{(}\PY{l+m}{4.5}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{10}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1.5}\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{20}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{7500}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{7200}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1200}\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{30}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}pnorm\PY{p}{(}\PY{l+m}{7000}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{7200}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1200}\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{30}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.00364517904576781
+
+    
+    0.733893025621512
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}727}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          alpha \PY{o}{=} \PY{l+m}{0.05}
+          pknot \PY{o}{=} \PY{l+m}{0.25}
+          n \PY{o}{=} \PY{l+m}{300}
+          truep \PY{o}{=} \PY{l+m}{0.22}
+          ZAL \PY{o}{=} qnorm\PY{p}{(}alpha\PY{p}{)}
+          phatL \PY{o}{=} pknot \PY{o}{+} ZAL \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}pknot \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}pknot\PY{p}{)} \PY{o}{/} n\PY{p}{)}
+          ZL \PY{o}{=} \PY{p}{(}phatL \PY{o}{\PYZhy{}} truep\PY{p}{)} \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}truep \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}truep\PY{p}{)} \PY{o}{/} n\PY{p}{)}
+          \PY{l+m}{1}\PY{o}{\PYZhy{}}pnorm\PY{p}{(}ZL\PY{p}{)}
+          pnorm\PY{p}{(}ZL\PY{p}{)}
+\end{Verbatim}
+
+
+    0.679036639899256
+
+    
+    0.320963360100744
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}728}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          f \PY{o}{=} \PY{k+kp}{expression}\PY{p}{(}x\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}\PY{p}{(}x\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{x\PYZsq{}}\PY{p}{)}
+          D\PY{p}{(}f\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{x\PYZsq{}}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{l+m}{2}\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{l+m}{\PYZhy{}2}\PY{o}{*}x\PY{o}{\PYZca{}}\PY{l+m}{3}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{l+m}{1}\PY{o}{/}\PY{l+m}{4}\PY{p}{,}\PY{l+m}{3}\PY{o}{/}\PY{l+m}{8}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+2 * x/(x - 1) - x^2/(x - 1)^2
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+0.2341309 with absolute error < 2.6e-15
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}729}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          a \PY{o}{=} \PY{l+m}{3}
+          t \PY{o}{=} \PY{l+m}{5}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          dpois\PY{p}{(}\PY{l+m}{12}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          a \PY{o}{=} \PY{l+m}{8}
+          t \PY{o}{=} \PY{l+m}{3}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          ppois\PY{p}{(}\PY{l+m}{21}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0828592343686454
+
+    
+    0.686071971901457
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}730}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          a \PY{o}{=} \PY{l+m}{8}
+          t \PY{o}{=} \PY{l+m}{3}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          ppois\PY{p}{(}\PY{l+m}{21}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}ppois\PY{p}{(}\PY{l+m}{18}\PY{l+m}{\PYZhy{}1}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.226801591920095
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}731}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          a \PY{o}{=} \PY{l+m}{0.01}
+          t \PY{o}{=} \PY{l+m}{100}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          ppois\PY{p}{(}\PY{l+m}{2}\PY{l+m}{\PYZhy{}1}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{,}lower\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.264241117657115
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}732}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          a \PY{o}{=} \PY{l+m}{4}
+          t \PY{o}{=} \PY{l+m}{1}
+          lam \PY{o}{=} a \PY{o}{*} \PY{k+kp}{t}
+          dpois\PY{p}{(}\PY{l+m}{7}\PY{p}{,}lambda\PY{o}{=}lam\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{3}
+\end{Verbatim}
+
+
+    0.000211073847054545
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}733}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{22}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{25}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{3.1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+          mu\PY{o}{=}\PY{l+m}{25}
+          sigma\PY{o}{=}\PY{l+m}{3.1}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{k+kp}{exp}\PY{p}{(}\PY{l+m}{\PYZhy{}1} \PY{o}{*} \PY{p}{(}x \PY{o}{\PYZhy{}} mu\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} \PY{p}{(}\PY{l+m}{2}\PY{o}{*}sigma\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}sigma \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{2} \PY{o}{*} \PY{k+kc}{pi}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{l+m}{22}\PY{p}{,}\PY{k+kc}{Inf}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.833413365520525
+
+    
+    
+    \begin{verbatim}
+0.8334134 with absolute error < 2.2e-06
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}734}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{24.3}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{25}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{3.1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}} pnorm\PY{p}{(}\PY{l+m}{18}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{25}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{3.1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          mu\PY{o}{=}\PY{l+m}{25}
+          sigma\PY{o}{=}\PY{l+m}{3.1}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{k+kp}{exp}\PY{p}{(}\PY{l+m}{\PYZhy{}1} \PY{o}{*} \PY{p}{(}x \PY{o}{\PYZhy{}} mu\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} \PY{p}{(}\PY{l+m}{2}\PY{o}{*}sigma\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}sigma \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{2} \PY{o}{*} \PY{k+kc}{pi}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{24.3}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.398705160765656
+
+    
+    
+    \begin{verbatim}
+0.3987052 with absolute error < 4.4e-15
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}735}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{7.5}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{6.5}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}pnorm\PY{p}{(}\PY{l+m}{5}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{6.5}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pnorm\PY{p}{(}\PY{l+m}{1.75}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{0}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}} pnorm\PY{p}{(}\PY{l+m}{0.23}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{0}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          qnorm\PY{p}{(}\PY{l+m}{0.05}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{25}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{3.1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          qnorm\PY{p}{(}\PY{l+m}{0.95}\PY{p}{,}mean\PY{o}{=}\PY{l+m}{25}\PY{p}{,}sd\PY{o}{=}\PY{l+m}{3.1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.774537544799685
+
+    
+    0.368986727994177
+
+    
+    19.9009537564504
+
+    
+    30.0990462435496
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}736}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.20}
+          pnorm\PY{p}{(}\PY{l+m}{18.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.20}
+          pnorm\PY{p}{(}\PY{l+m}{20.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.353830233327276
+
+    
+    0.549738224830113
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}737}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.20}
+          pnorm\PY{p}{(}\PY{l+m}{17.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.734014470951299
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}738}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.20}
+          pnorm\PY{p}{(}\PY{l+m}{20.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}
+            pnorm\PY{p}{(}\PY{l+m}{19.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0994764496602258
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}739}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.60}
+          pnorm\PY{p}{(}\PY{l+m}{69.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.973760250220377
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}740}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{100}
+          p \PY{o}{=} \PY{l+m}{.50}
+          pnorm\PY{p}{(}\PY{l+m}{54.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.18406012534676
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}741}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{1000}
+          p \PY{o}{=} \PY{l+m}{.01}
+          pnorm\PY{p}{(}\PY{l+m}{4.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.959769263059912
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}742}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{50}
+          p \PY{o}{=} \PY{l+m}{0.30}
+          pnorm\PY{p}{(}\PY{l+m}{5.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}\PY{o}{\PYZhy{}}pnorm\PY{p}{(}\PY{l+m}{4.5}\PY{p}{,}mean\PY{o}{=}n\PY{o}{*}p\PY{p}{,}sd\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}n\PY{o}{*}p\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PY{p}{)}\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.00108834300126286
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}743}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{84.98}\PY{p}{,}\PY{l+m}{87.72}\PY{p}{,}\PY{l+m}{86.82}\PY{p}{,}\PY{l+m}{87.53}\PY{p}{,}\PY{l+m}{88.63}\PY{p}{,}\PY{l+m}{88.51}\PY{p}{,}\PY{l+m}{88.3}\PY{p}{,}\PY{l+m}{86.64}\PY{p}{,}\PY{l+m}{86.69}\PY{p}{,}\PY{l+m}{86.77}\PY{p}{,}\PY{l+m}{87.38}\PY{p}{,}\PY{l+m}{86.61}\PY{p}{,}\PY{l+m}{89.31}\PY{p}{,}\PY{l+m}{90.02}\PY{p}{,}\PY{l+m}{89.35}\PY{p}{,}\PY{l+m}{90.47}\PY{p}{,}\PY{l+m}{88.6}\PY{p}{,}\PY{l+m}{86.31}\PY{p}{,}\PY{l+m}{85.65}\PY{p}{,}\PY{l+m}{85.9}\PY{p}{)}
+          mx \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          msum \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZhy{}}\PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}
+          pop\PYZus{}std \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}msum\PY{o}{/}\PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}\PY{p}{)}
+          pop\PYZus{}std \PY{o}{\PYZca{}}\PY{l+m}{2}
+\end{Verbatim}
+
+
+    2.13864474999999
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}744}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{8}\PY{p}{,}\PY{l+m}{13}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{32}\PY{p}{,}\PY{l+m}{40}\PY{p}{,}\PY{l+m}{42}\PY{p}{,}\PY{l+m}{43}\PY{p}{,}\PY{l+m}{45}\PY{p}{,}\PY{l+m}{57}\PY{p}{,}\PY{l+m}{63}\PY{p}{)}
+          mx \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          mstd \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}
+          cv \PY{o}{=} mstd \PY{o}{/} mx \PY{o}{*} \PY{l+m}{100}
+          cv
+\end{Verbatim}
+
+
+    58.6855034283337
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}745}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{8}\PY{p}{,} \PY{l+m}{19}\PY{p}{,} \PY{l+m}{25}\PY{p}{,} \PY{l+m}{31}\PY{p}{,} \PY{l+m}{33}\PY{p}{,} \PY{l+m}{47}\PY{p}{,} \PY{l+m}{512}\PY{p}{,} \PY{l+m}{803}\PY{p}{,} \PY{l+m}{20000}\PY{p}{)}
+          mx \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          medx \PY{o}{=} median\PY{p}{(}x\PY{p}{)}
+          mstd \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}
+          skewness \PY{o}{=} \PY{p}{(}\PY{l+m}{3} \PY{o}{*} \PY{p}{(}mx \PY{o}{\PYZhy{}} medx\PY{p}{)}\PY{p}{)} \PY{o}{/} mstd
+          skewness
+\end{Verbatim}
+
+
+    1.06794669775228
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}746}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{=} \PY{l+m}{28.2}
+          mean \PY{o}{=} \PY{l+m}{30}
+          stdev \PY{o}{=} \PY{l+m}{2}
+          zscore \PY{o}{=} \PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)} \PY{o}{/} stdev
+          zscore
+\end{Verbatim}
+
+
+    -0.9
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}747}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Statistics\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZdq{}}\PY{p}{)}
+          x \PY{o}{=} \PY{l+m}{66}
+          mean \PY{o}{=} \PY{l+m}{79}
+          stdev \PY{o}{=} \PY{l+m}{4.5}
+          zscore \PY{o}{=} \PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)} \PY{o}{/} stdev
+          zscore
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Calculus\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZdq{}}\PY{p}{)}
+          x \PY{o}{=} \PY{l+m}{81}
+          mean \PY{o}{=} \PY{l+m}{69}
+          stdev \PY{o}{=} \PY{l+m}{3.7}
+          zscore \PY{o}{=} \PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)} \PY{o}{/} stdev
+          zscore
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "Statistics"
+[1] "----------"
+
+    \end{Verbatim}
+
+    -2.88888888888889
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "Calculus"
+[1] "--------"
+
+    \end{Verbatim}
+
+    3.24324324324324
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}748}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Geography\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZdq{}}\PY{p}{)}
+          x \PY{o}{=} \PY{l+m}{56}
+          mean \PY{o}{=} \PY{l+m}{80}
+          stdev \PY{o}{=} \PY{l+m}{20}
+          zscore \PY{o}{=} \PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)} \PY{o}{/} stdev
+          zscore
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Mathematics\PYZdq{}}\PY{p}{)}
+          \PY{k+kp}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZdq{}}\PY{p}{)}
+          x \PY{o}{=} \PY{l+m}{285}
+          mean \PY{o}{=} \PY{l+m}{300}
+          stdev \PY{o}{=} \PY{l+m}{10}
+          zscore \PY{o}{=} \PY{p}{(}x \PY{o}{\PYZhy{}} \PY{k+kp}{mean}\PY{p}{)} \PY{o}{/} stdev
+          zscore
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "Geography"
+[1] "----------"
+
+    \end{Verbatim}
+
+    -1.2
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "Mathematics"
+[1] "-----------"
+
+    \end{Verbatim}
+
+    -1.5
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}749}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3}\PY{p}{,} \PY{l+m}{12}\PY{p}{,} \PY{l+m}{17}\PY{p}{,} \PY{l+m}{23}\PY{p}{,} \PY{l+m}{27}\PY{p}{,} \PY{l+m}{31}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{72}\PY{p}{,} \PY{l+m}{81}\PY{p}{,} \PY{l+m}{113}\PY{p}{,} \PY{l+m}{152}\PY{p}{,} \PY{l+m}{171}\PY{p}{,} \PY{l+m}{189}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.50}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+\end{Verbatim}
+
+
+    \textbf{25\textbackslash{}\%:} 23
+
+    
+    \textbf{50\textbackslash{}\%:} 45
+
+    
+    \textbf{75\textbackslash{}\%:} 113
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}750}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{68}\PY{p}{,}\PY{l+m}{73}\PY{p}{,}\PY{l+m}{66}\PY{p}{,}\PY{l+m}{76}\PY{p}{,}\PY{l+m}{86}\PY{p}{,}\PY{l+m}{74}\PY{p}{,}\PY{l+m}{61}\PY{p}{,}\PY{l+m}{89}\PY{p}{,}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{90}\PY{p}{,}\PY{l+m}{69}\PY{p}{,}\PY{l+m}{92}\PY{p}{,}\PY{l+m}{76}\PY{p}{,}\PY{l+m}{62}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{63}\PY{p}{,}\PY{l+m}{68}\PY{p}{,}\PY{l+m}{81}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{73}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}\PY{l+m}{87}\PY{p}{,}\PY{l+m}{75}\PY{p}{,}\PY{l+m}{64}\PY{p}{,}\PY{l+m}{82}\PY{p}{)}
+          quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+\end{Verbatim}
+
+
+    \textbf{25\textbackslash{}\%:} 66
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}751}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,} \PY{l+m}{25}\PY{p}{,} \PY{l+m}{33}\PY{p}{,} \PY{l+m}{41}\PY{p}{,} \PY{l+m}{42}\PY{p}{,} \PY{l+m}{45}\PY{p}{,} \PY{l+m}{51}\PY{p}{,} \PY{l+m}{67}\PY{p}{,} \PY{l+m}{88}\PY{p}{,} \PY{l+m}{91}\PY{p}{,} \PY{l+m}{105}\PY{p}{,} \PY{l+m}{231}\PY{p}{,} \PY{l+m}{405}\PY{p}{)}
+          q1 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          q3 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+          iqr \PY{o}{=} q3 \PY{o}{\PYZhy{}} q1
+          iqr
+\end{Verbatim}
+
+
+    \textbf{75\textbackslash{}\%:} 50
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}752}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.05}\PY{p}{,} \PY{l+m}{0.00}\PY{p}{,} \PY{l+m}{\PYZhy{}0.03}\PY{p}{,} \PY{l+m}{\PYZhy{}0.01}\PY{p}{,} \PY{l+m}{0.18}\PY{p}{,} \PY{l+m}{0.00}\PY{p}{,} \PY{l+m}{0.02}\PY{p}{,} \PY{l+m}{0.29}\PY{p}{,} \PY{l+m}{0.00}\PY{p}{,} \PY{l+m}{\PYZhy{}0.07}\PY{p}{,} \PY{l+m}{0.10}\PY{p}{,} \PY{l+m}{0.07}\PY{p}{,} \PY{l+m}{0.03}\PY{p}{)}
+          q1 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          q3 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+          iqr \PY{o}{=} q3 \PY{o}{\PYZhy{}} q1
+          lf \PY{o}{=} q1 \PY{o}{\PYZhy{}} \PY{l+m}{1.5} \PY{o}{*} iqr
+          uf \PY{o}{=} q3 \PY{o}{+} \PY{l+m}{1.5} \PY{o}{*} iqr
+          lf
+          uf
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          q1 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.25}\PY{p}{)}
+          q3 \PY{o}{=} quantile\PY{p}{(}x\PY{p}{,}\PY{l+m}{0.75}\PY{p}{)}
+          iqr \PY{o}{=} q3 \PY{o}{\PYZhy{}} q1
+          lf \PY{o}{=} q1 \PY{o}{\PYZhy{}} \PY{l+m}{1.5} \PY{o}{*} iqr
+          uf \PY{o}{=} q3 \PY{o}{+} \PY{l+m}{1.5} \PY{o}{*} iqr
+          lf
+          uf
+\end{Verbatim}
+
+
+    \textbf{25\textbackslash{}\%:} -0.105
+
+    
+    \textbf{75\textbackslash{}\%:} 0.175
+
+    
+    \textbf{25\textbackslash{}\%:} -0.105
+
+    
+    \textbf{75\textbackslash{}\%:} 0.175
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}753}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          xval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{4}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}8}\PY{p}{,}\PY{l+m}{\PYZhy{}1}\PY{p}{,}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{12}\PY{p}{)}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}xval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{4}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{2}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{4}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 -14.5\\
+	   6.6\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}754}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          x1val \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{4}\PY{p}{)}
+          x2val \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{7}\PY{p}{,}\PY{l+m}{11}\PY{p}{,}\PY{l+m}{21}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{12}\PY{p}{,}\PY{l+m}{17}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{30}\PY{p}{)}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}x1val\PY{p}{,}x2val\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{4}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{4}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 6.595238\\
+	 2.952381\\
+	 0.547619\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}755}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          one \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+          xval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}3}\PY{p}{,}\PY{l+m}{\PYZhy{}2}\PY{p}{,}\PY{l+m}{\PYZhy{}1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{3}\PY{p}{)}
+          yval \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}5}\PY{p}{,}\PY{l+m}{\PYZhy{}1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{\PYZhy{}3}\PY{p}{,}\PY{l+m}{\PYZhy{}8}\PY{p}{,}\PY{l+m}{\PYZhy{}7}\PY{p}{)}
+          xsquared \PY{o}{=} xval\PY{o}{\PYZca{}}\PY{l+m}{2}
+          X \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}one\PY{p}{,}xval\PY{p}{,}xsquared\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{7}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+          Y \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{matrix}\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}yval\PY{p}{)}\PY{p}{,}nrow\PY{o}{=}\PY{l+m}{7}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}
+          \PY{k+kp}{solve}\PY{p}{(}\PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} \PY{k+kp}{t}\PY{p}{(}X\PY{p}{)} \PY{o}{\PYZpc{}*\PYZpc{}} Y
+\end{Verbatim}
+
+
+    \begin{tabular}{l}
+	 -0.3333333\\
+	 -0.8214286\\
+	 -0.7023810\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}756}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{61}
+          s1 \PY{o}{=} \PY{l+m}{34.4}
+          n2 \PY{o}{=} \PY{l+m}{31}
+          s2 \PY{o}{=} \PY{l+m}{27.6}
+          df1 \PY{o}{=} n1 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          df2 \PY{o}{=} n2 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          ts \PY{o}{=} s1\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} s2\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{c+c1}{\PYZsh{} \PYZsq{}right tail\PYZsq{}}
+          pf\PY{p}{(}ts\PY{p}{,}df1\PY{p}{,}df2\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0947487120743712
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}757}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n1 \PY{o}{=} \PY{l+m}{31}
+          s1 \PY{o}{=} \PY{l+m}{5.46}
+          n2 \PY{o}{=} \PY{l+m}{25}
+          s2 \PY{o}{=} \PY{l+m}{5.4}
+          df1 \PY{o}{=} n1 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          df2 \PY{o}{=} n2 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          ts \PY{o}{=} s1\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} s2\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{c+c1}{\PYZsh{} \PYZsq{}two tails\PYZsq{}}
+          \PY{l+m}{2}\PY{o}{*}\PY{p}{(}pf\PY{p}{(}\PY{k+kp}{abs}\PY{p}{(}ts\PY{p}{)}\PY{p}{,}df1\PY{p}{,}df2\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.966428568658038
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}758}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n1 \PY{o}{=} \PY{l+m}{16}
+          s1 \PY{o}{=} \PY{l+m}{20.4}
+          n2 \PY{o}{=} \PY{l+m}{13}
+          s2 \PY{o}{=} \PY{l+m}{21.9}
+          df1 \PY{o}{=} n1 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          df2 \PY{o}{=} n2 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          ts \PY{o}{=} s1\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} s2\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{c+c1}{\PYZsh{} \PYZsq{}left tail\PYZsq{}}
+          pf\PY{p}{(}ts\PY{p}{,}df1\PY{p}{,}df2\PY{p}{)}
+\end{Verbatim}
+
+
+    0.391521222988294
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}759}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n1 \PY{o}{=} \PY{l+m}{13}
+          s1 \PY{o}{=} \PY{l+m}{0.99}
+          n2 \PY{o}{=} \PY{l+m}{16}
+          s2 \PY{o}{=} \PY{l+m}{1.17}
+          df1 \PY{o}{=} n1 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          df2 \PY{o}{=} n2 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          ts \PY{o}{=} s1\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} s2\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{c+c1}{\PYZsh{} \PYZsq{}left tail\PYZsq{}}
+          pf\PY{p}{(}ts\PY{p}{,}df1\PY{p}{,}df2\PY{p}{)}
+\end{Verbatim}
+
+
+    0.283219484329873
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}760}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{21}
+          s1 \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1107.2}\PY{p}{)}
+          n2 \PY{o}{=} \PY{l+m}{18}
+          s2 \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{737.28}\PY{p}{)}
+          df1 \PY{o}{=} n1 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          df2 \PY{o}{=} n2 \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          ts \PY{o}{=} s1\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} s2\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{c+c1}{\PYZsh{} \PYZsq{}right tail\PYZsq{}}
+          pf\PY{p}{(}ts\PY{p}{,}df1\PY{p}{,}df2\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.200544817052809
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}761}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{100}
+          x1 \PY{o}{=} \PY{l+m}{38}
+          n2 \PY{o}{=} \PY{l+m}{140}
+          x2 \PY{o}{=} \PY{l+m}{50}
+          phat1 \PY{o}{=} x1\PY{o}{/}n1
+          phat2 \PY{o}{=} x2\PY{o}{/}n2
+          phat \PY{o}{=} \PY{p}{(}x1 \PY{o}{+} x2\PY{p}{)} \PY{o}{/} \PY{p}{(}n1 \PY{o}{+} n2\PY{p}{)}
+          z \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{k+kp}{sqrt}\PY{p}{(}phat\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}n1 \PY{o}{+} \PY{l+m}{1}\PY{o}{/}n2\PY{p}{)}\PY{p}{)}
+          pnorm\PY{p}{(}z\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.358576358733527
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}762}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}two tails\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{1000}
+          x1 \PY{o}{=} \PY{l+m}{250}
+          n2 \PY{o}{=} \PY{l+m}{1200}
+          x2 \PY{o}{=} \PY{l+m}{195}
+          phat1 \PY{o}{=} x1\PY{o}{/}n1
+          phat2 \PY{o}{=} x2\PY{o}{/}n2
+          phat \PY{o}{=} \PY{p}{(}x1 \PY{o}{+} x2\PY{p}{)} \PY{o}{/} \PY{p}{(}n1 \PY{o}{+} n2\PY{p}{)}
+          z \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{k+kp}{sqrt}\PY{p}{(}phat\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}n1 \PY{o}{+} \PY{l+m}{1}\PY{o}{/}n2\PY{p}{)}\PY{p}{)}
+          \PY{l+m}{2} \PY{o}{*} \PY{p}{(}pnorm\PY{p}{(}\PY{k+kp}{abs}\PY{p}{(}z\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    3.63105103002167e-07
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}763}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n1 \PY{o}{=} \PY{l+m}{200000}
+          x1 \PY{o}{=} \PY{l+m}{33}
+          n2 \PY{o}{=} \PY{l+m}{200000}
+          x2 \PY{o}{=} \PY{l+m}{115}
+          phat1 \PY{o}{=} x1\PY{o}{/}n1
+          phat2 \PY{o}{=} x2\PY{o}{/}n2
+          phat \PY{o}{=} \PY{p}{(}x1 \PY{o}{+} x2\PY{p}{)} \PY{o}{/} \PY{p}{(}n1 \PY{o}{+} n2\PY{p}{)}
+          z \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{k+kp}{sqrt}\PY{p}{(}phat\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}n1 \PY{o}{+} \PY{l+m}{1}\PY{o}{/}n2\PY{p}{)}\PY{p}{)}
+          pnorm\PY{p}{(}z\PY{p}{)}
+\end{Verbatim}
+
+
+    7.83228070692809e-12
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}764}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n1 \PY{o}{=} \PY{l+m}{11000}
+          x1 \PY{o}{=} \PY{l+m}{104}
+          n2 \PY{o}{=} \PY{l+m}{11000}
+          x2 \PY{o}{=} \PY{l+m}{189}
+          phat1 \PY{o}{=} x1\PY{o}{/}n1
+          phat2 \PY{o}{=} x2\PY{o}{/}n2
+          phat \PY{o}{=} \PY{p}{(}x1 \PY{o}{+} x2\PY{p}{)} \PY{o}{/} \PY{p}{(}n1 \PY{o}{+} n2\PY{p}{)}
+          z \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{k+kp}{sqrt}\PY{p}{(}phat\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}n1 \PY{o}{+} \PY{l+m}{1}\PY{o}{/}n2\PY{p}{)}\PY{p}{)}
+          pnorm\PY{p}{(}z\PY{p}{)}
+\end{Verbatim}
+
+
+    2.87911358804214e-07
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}765}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}two tails\PYZdq{}}
+          day \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{22}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{22}\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{22}\PY{p}{,}\PY{l+m}{22}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{17}\PY{p}{,}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{26}\PY{p}{,}\PY{l+m}{30}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{25}\PY{p}{)}
+          eve \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{18}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{31}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{28}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{19}\PY{p}{,}\PY{l+m}{23}\PY{p}{,}\PY{l+m}{24}\PY{p}{,}\PY{l+m}{20}\PY{p}{,}\PY{l+m}{27}\PY{p}{,}\PY{l+m}{21}\PY{p}{,}\PY{l+m}{29}\PY{p}{,}\PY{l+m}{30}\PY{p}{)}
+          n1 \PY{o}{=} \PY{k+kp}{length}\PY{p}{(}day\PY{p}{)}
+          xbar1 \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}day\PY{p}{)}
+          s1 \PY{o}{=} sd\PY{p}{(}day\PY{p}{)}
+          n2 \PY{o}{=} \PY{k+kp}{length}\PY{p}{(}eve\PY{p}{)}
+          xbar2 \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}eve\PY{p}{)}
+          s2 \PY{o}{=} sd\PY{p}{(}eve\PY{p}{)}
+          ts \PY{o}{=} \PY{p}{(}\PY{p}{(}xbar1\PY{o}{\PYZhy{}}xbar2\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{l+m}{0}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}s1\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n1 \PY{o}{+} s2\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n2\PY{p}{)}
+          ts
+\end{Verbatim}
+
+
+    -1.6797979972233
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}766}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}left tail\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{15}
+          xbar1 \PY{o}{=} \PY{l+m}{5.3}
+          s1 \PY{o}{=} \PY{l+m}{1.1}
+          n2 \PY{o}{=} \PY{l+m}{16}
+          xbar2 \PY{o}{=} \PY{l+m}{5.6}
+          s2 \PY{o}{=} \PY{l+m}{1.0}
+          ts \PY{o}{=} \PY{p}{(}\PY{p}{(}xbar1\PY{o}{\PYZhy{}}xbar2\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{l+m}{0}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}s1\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n1 \PY{o}{+} s2\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n2\PY{p}{)}
+          pt\PY{p}{(}ts\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.215838863448689
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}767}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n1 \PY{o}{=} \PY{l+m}{18}
+          xbar1 \PY{o}{=} \PY{l+m}{530}
+          s1 \PY{o}{=} \PY{l+m}{40}
+          n2 \PY{o}{=} \PY{l+m}{13}
+          xbar2 \PY{o}{=} \PY{l+m}{515}
+          s2 \PY{o}{=} \PY{l+m}{25}
+          ts \PY{o}{=} \PY{p}{(}\PY{p}{(}xbar1\PY{o}{\PYZhy{}}xbar2\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{l+m}{0}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}s1\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n1 \PY{o}{+} s2\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/}n2\PY{p}{)}
+          pt\PY{p}{(}ts\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.102990469307774
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}768}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}left tail\PYZdq{}}
+          n \PY{o}{=} \PY{l+m}{28}
+          s \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{31.5}\PY{p}{)}
+          sigmaknot \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{50.4}\PY{p}{)}
+          ts \PY{o}{=} \PY{p}{(}n \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} sigmaknot\PY{o}{\PYZca{}}\PY{l+m}{2}
+          pchisq\PY{p}{(}ts\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.0658397354427676
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}769}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n \PY{o}{=} \PY{l+m}{101}
+          s \PY{o}{=} \PY{l+m}{1200}
+          sigmaknot \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1000000}\PY{p}{)}
+          ts \PY{o}{=} \PY{p}{(}n \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} sigmaknot\PY{o}{\PYZca{}}\PY{l+m}{2}
+          pchisq\PY{p}{(}ts\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.00262925091745129
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}770}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}two tail\PYZdq{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{48}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{68}\PY{p}{,}\PY{l+m}{69}\PY{p}{,}\PY{l+m}{55}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{57}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}\PY{l+m}{83}\PY{p}{,}\PY{l+m}{32}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}\PY{l+m}{72}\PY{p}{,}\PY{l+m}{58}\PY{p}{)}
+          n \PY{o}{=} \PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}
+          s \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}
+          sigmaknot \PY{o}{=} \PY{l+m}{15}
+          ts \PY{o}{=} \PY{p}{(}n \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} sigmaknot\PY{o}{\PYZca{}}\PY{l+m}{2}
+          \PY{l+m}{2} \PY{o}{*} \PY{p}{(}pchisq\PY{p}{(}\PY{k+kp}{abs}\PY{p}{(}ts\PY{p}{)}\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.681331505888145
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}771}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}left tail\PYZdq{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{48}\PY{p}{,}\PY{l+m}{41}\PY{p}{,}\PY{l+m}{68}\PY{p}{,}\PY{l+m}{69}\PY{p}{,}\PY{l+m}{55}\PY{p}{,}\PY{l+m}{70}\PY{p}{,}\PY{l+m}{57}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}\PY{l+m}{83}\PY{p}{,}\PY{l+m}{32}\PY{p}{,}\PY{l+m}{60}\PY{p}{,}\PY{l+m}{72}\PY{p}{,}\PY{l+m}{58}\PY{p}{)}
+          n \PY{o}{=} \PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}
+          xbar \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}x\PY{p}{)}
+          s \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}
+          muknot \PY{o}{=} \PY{l+m}{60}
+          t \PY{o}{=} \PY{p}{(}xbar \PY{o}{\PYZhy{}} muknot\PY{p}{)} \PY{o}{/} \PY{p}{(}s \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}\PY{p}{)}
+          pt\PY{p}{(}\PY{k+kp}{t}\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.523351010099266
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}772}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}right tail\PYZdq{}}
+          n \PY{o}{=} \PY{l+m}{20}
+          muknot \PY{o}{=} \PY{l+m}{3.5}
+          xbar \PY{o}{=} \PY{l+m}{3.7}
+          s \PY{o}{=} \PY{l+m}{0.8}
+          t \PY{o}{=} \PY{p}{(}xbar \PY{o}{\PYZhy{}} muknot\PY{p}{)} \PY{o}{/} \PY{p}{(}s \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}\PY{p}{)}
+          pt\PY{p}{(}\PY{k+kp}{t}\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.13874506978788
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}773}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{c+c1}{\PYZsh{} \PYZdq{}two tails\PYZdq{}}
+          n \PY{o}{=} \PY{l+m}{25}
+          xbar \PY{o}{=} \PY{l+m}{1380}
+          sigma \PY{o}{=} \PY{l+m}{80}
+          muknot \PY{o}{=} \PY{l+m}{1400}
+          z \PY{o}{=} \PY{p}{(}xbar \PY{o}{\PYZhy{}} muknot\PY{p}{)} \PY{o}{/} \PY{p}{(}sigma \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}\PY{p}{)}
+          \PY{l+m}{2} \PY{o}{*} \PY{p}{(}pnorm\PY{p}{(}\PY{k+kp}{abs}\PY{p}{(}z\PY{p}{)}\PY{p}{,}lower.tail\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.21129954733371
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}774}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          p \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.25}\PY{p}{,}\PY{l+m}{0.05}\PY{p}{,}\PY{l+m}{0.35}\PY{p}{,}\PY{l+m}{0.35}\PY{p}{)}
+          n \PY{o}{=} \PY{l+m}{600}
+          expected \PY{o}{=} n \PY{o}{*} p
+          expected
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 150
+\item 30
+\item 210
+\item 210
+\end{enumerate*}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}775}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          observed \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{65}\PY{p}{,}\PY{l+m}{69}\PY{p}{,}\PY{l+m}{80}\PY{p}{,}\PY{l+m}{86}\PY{p}{)}
+          prob \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.20}\PY{p}{,}\PY{l+m}{0.30}\PY{p}{,}\PY{l+m}{0.30}\PY{p}{)}
+          chisq.test\PY{p}{(}observed\PY{p}{,}p\PY{o}{=}prob\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 3.0556, df = 3, p-value = 0.3831
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}776}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          observed \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{66}\PY{p}{,}\PY{l+m}{39}\PY{p}{,}\PY{l+m}{25}\PY{p}{,}\PY{l+m}{30}\PY{p}{)}
+          prob \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0.18}\PY{p}{,}\PY{l+m}{0.39}\PY{p}{,}\PY{l+m}{0.31}\PY{p}{,}\PY{l+m}{0.12}\PY{p}{)}
+          chisq.test\PY{p}{(}observed\PY{p}{,}p\PY{o}{=}prob\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 75.101, df = 3, p-value = 3.447e-16
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}777}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          alpha \PY{o}{=} \PY{l+m}{3}
+          beta \PY{o}{=} \PY{l+m}{2}
+          gamma \PY{o}{=} \PY{k+kp}{factorial}\PY{p}{(}alpha \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)}
+          a \PY{o}{=} \PY{l+m}{0}
+          b \PY{o}{=} \PY{l+m}{4}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{p}{(}x\PY{o}{\PYZca{}}\PY{p}{(}alpha\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x \PY{o}{/} \PY{k+kp}{beta}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}beta \PY{o}{\PYZca{}} alpha \PY{o}{*} \PY{k+kp}{gamma}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}a\PY{p}{,}b\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+0.3233236 with absolute error < 3.6e-15
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}778}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          alpha \PY{o}{=} \PY{l+m}{10}
+          beta \PY{o}{=} \PY{l+m}{5}
+          gamma \PY{o}{=} \PY{k+kp}{factorial}\PY{p}{(}alpha \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)}
+          a \PY{o}{=} \PY{l+m}{0}
+          b \PY{o}{=} \PY{l+m}{10}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{p}{(}x\PY{o}{\PYZca{}}\PY{p}{(}alpha\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x \PY{o}{/} \PY{k+kp}{beta}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}beta \PY{o}{\PYZca{}} alpha \PY{o}{*} \PY{k+kp}{gamma}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}a\PY{p}{,}b\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+4.649808e-05 with absolute error < 5.2e-19
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}779}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          alpha \PY{o}{=} \PY{l+m}{5}
+          beta \PY{o}{=} \PY{l+m}{3}
+          gamma \PY{o}{=} \PY{k+kp}{factorial}\PY{p}{(}alpha \PY{o}{\PYZhy{}} \PY{l+m}{1}\PY{p}{)}
+          a \PY{o}{=} \PY{l+m}{0}
+          b \PY{o}{=} \PY{k+kc}{Inf}
+          f \PY{o}{=} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}\PY{p}{(}\PY{p}{(}x\PY{o}{\PYZca{}}\PY{p}{(}alpha\PY{l+m}{\PYZhy{}1}\PY{p}{)}\PY{o}{*}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x \PY{o}{/} \PY{k+kp}{beta}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}beta \PY{o}{\PYZca{}} alpha \PY{o}{*} \PY{k+kp}{gamma}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{l+m}{50}\PY{o}{*}x\PY{l+m}{+3}\PY{o}{*}x\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{p}{\PYZcb{}}
+          integrate\PY{p}{(}f\PY{p}{,}a\PY{p}{,}b\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+1560 with absolute error < 6.8e-05
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}780}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          var1 \PY{o}{=} \PY{l+m}{40}
+          n1 \PY{o}{=} \PY{l+m}{11}
+          var2 \PY{o}{=} \PY{l+m}{35}
+          n2 \PY{o}{=} \PY{l+m}{6}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          FL \PY{o}{=} qf\PY{p}{(}atl\PY{p}{,}n1\PY{l+m}{\PYZhy{}1}\PY{p}{,}n2\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          FR \PY{o}{=} qf\PY{p}{(}atl\PY{p}{,}n1\PY{l+m}{\PYZhy{}1}\PY{p}{,}n2\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          lb \PY{o}{=} \PY{p}{(}var1 \PY{o}{/} var2\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{/} FR\PY{p}{)}
+          ub \PY{o}{=} \PY{p}{(}var1 \PY{o}{/} var2\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{/} FL\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.172659086891408
+
+    
+    4.84124076364415
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}781}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2.0}\PY{p}{,}\PY{l+m}{3.2}\PY{p}{,}\PY{l+m}{1.8}\PY{p}{,}\PY{l+m}{2.9}\PY{p}{,}\PY{l+m}{0.9}\PY{p}{,}\PY{l+m}{4.0}\PY{p}{,}\PY{l+m}{3.3}\PY{p}{,}\PY{l+m}{2.9}\PY{p}{,}\PY{l+m}{3.6}\PY{p}{,}\PY{l+m}{0.8}\PY{p}{)}
+          n \PY{o}{=} \PY{k+kp}{length}\PY{p}{(}x\PY{p}{)}
+          s \PY{o}{=} sd\PY{p}{(}x\PY{p}{)}
+          clevel \PY{o}{=} \PY{l+m}{.90}
+          atl \PY{o}{=} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          XL \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          XR \PY{o}{=} qchisq\PY{p}{(}atl\PY{p}{,}df\PY{o}{=}n\PY{l+m}{\PYZhy{}1}\PY{p}{)}
+          lb \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} XR\PY{p}{)}
+          ub \PY{o}{=} \PY{k+kp}{sqrt}\PY{p}{(} \PY{p}{(}n\PY{l+m}{\PYZhy{}1}\PY{p}{)} \PY{o}{*} s\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{/} XL\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.809396273930786
+
+    
+    1.8257657861127
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}782}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{15}
+          x \PY{o}{=} \PY{l+m}{200}
+          n \PY{o}{=} \PY{l+m}{440}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          phat \PY{o}{=} x \PY{o}{/} n
+          lb \PY{o}{=} phat \PY{o}{\PYZhy{}} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)} \PY{o}{/} n\PY{p}{)}
+          ub \PY{o}{=} phat \PY{o}{+} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat \PY{o}{*} \PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}phat\PY{p}{)} \PY{o}{/} n\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    0.408020099610956
+
+    
+    0.501070809479953
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}783}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          n \PY{o}{=} \PY{l+m}{16}
+          xbar \PY{o}{=} \PY{l+m}{645}
+          sigma \PY{o}{=} \PY{l+m}{31}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          lb \PY{o}{=} xbar \PY{o}{\PYZhy{}} z \PY{o}{*} sigma \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          ub \PY{o}{=} xbar \PY{o}{+} z \PY{o}{*} sigma \PY{o}{/} \PY{k+kp}{sqrt}\PY{p}{(}n\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    629.810279119815
+
+    
+    660.189720880185
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}784}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          x1 \PY{o}{=} \PY{l+m}{72}
+          n1 \PY{o}{=} \PY{l+m}{240}
+          x2 \PY{o}{=} \PY{l+m}{82}
+          n2 \PY{o}{=} \PY{l+m}{200}
+          clevel \PY{o}{=} \PY{l+m}{.95}
+          atl \PY{o}{=} clevel \PY{o}{+} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} clevel\PY{p}{)} \PY{o}{/} \PY{l+m}{2}
+          z \PY{o}{=} qnorm\PY{p}{(}atl\PY{p}{)}
+          phat1 \PY{o}{=} x1 \PY{o}{/} n1
+          phat2 \PY{o}{=} x2 \PY{o}{/} n2
+          lb \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{\PYZhy{}} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat1 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat1\PY{p}{)} \PY{o}{/} n1 \PY{o}{+} phat2 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} n2\PY{p}{)}
+          ub \PY{o}{=} \PY{p}{(}phat1 \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{+} z \PY{o}{*} \PY{k+kp}{sqrt}\PY{p}{(}phat1 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat1\PY{p}{)} \PY{o}{/} n1 \PY{o}{+} phat2 \PY{o}{*} \PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} phat2\PY{p}{)} \PY{o}{/} n2\PY{p}{)}
+          lb
+          ub
+\end{Verbatim}
+
+
+    -0.199484752398031
+
+    
+    -0.0205152476019691
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}785}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          pbinom\PY{p}{(}\PY{l+m}{15}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.35}\PY{p}{)}\PY{o}{\PYZhy{}}pbinom\PY{p}{(}\PY{l+m}{11}\PY{l+m}{\PYZhy{}1}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.35}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.462158084407176
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}786}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          \PY{l+m}{1}\PY{o}{\PYZhy{}}pbinom\PY{p}{(}\PY{l+m}{12}\PY{l+m}{\PYZhy{}1}\PY{p}{,}size\PY{o}{=}\PY{l+m}{30}\PY{p}{,}prob\PY{o}{=}\PY{l+m}{.35}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+          dbinom\PY{p}{(}\PY{l+m}{4}\PY{p}{,} size\PY{o}{=}\PY{l+m}{20}\PY{p}{,} prob\PY{o}{=}\PY{l+m}{0.15}\PY{p}{)}
+\end{Verbatim}
+
+
+    0.345175880532805
+
+    
+    0.182121672111951
+
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
