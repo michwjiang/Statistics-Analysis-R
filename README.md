@@ -2,4 +2,4 @@
 
 ALL RIGHTS RESERVED
 
-Some regression analysis and extreme value stat in R
+Some statistics, analysis and extreme value stat in R
